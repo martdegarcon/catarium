@@ -1,0 +1,251 @@
+{
+  "app": {
+    "brand": "Catarium"
+  },
+  "navigation": {
+    "home": "主页",
+    "catarium": "Catarium",
+    "news": "新闻",
+    "work": "工作",
+    "politics": "政治"
+  },
+  "sidebar": {
+    "menuLabel": "菜单",
+    "collapse": "收起",
+    "expand": "展开",
+    "theme": {
+      "label": "主题",
+      "options": {
+        "light": "浅色",
+        "dark": "深色",
+        "system": "跟随系统"
+      }
+    }
+  },
+  "userMenu": {
+    "fallbackName": "用户",
+    "profile": "个人资料",
+    "settings": "设置",
+    "language": {
+      "label": "语言",
+      "description": "选择界面语言",
+      "ru": "俄语",
+      "en": "英语",
+      "zh": "中文"
+    },
+    "logout": "退出登录"
+  },
+  "auth": {
+    "login": {
+      "title": "登录系统",
+      "description": "请输入账号与密码以继续",
+      "fields": {
+        "login": {
+          "label": "登录名",
+          "placeholder": "输入您的登录名"
+        },
+        "password": {
+          "label": "密码",
+          "placeholder": "输入您的密码"
+        }
+      },
+      "actions": {
+        "submit": {
+          "idle": "登录",
+          "loading": "登录中..."
+        },
+        "forgotPassword": "忘记密码？"
+      },
+      "messages": {
+        "invalidCredentials": "登录名或密码错误",
+        "genericError": "登录失败，请稍后再试"
+      }
+    },
+    "register": {
+      "title": "创建账户",
+      "description": "填写表单以创建新账户",
+      "fields": {
+        "login": {
+          "label": "登录名",
+          "placeholder": "设置一个登录名"
+        },
+        "email": {
+          "label": "邮箱",
+          "placeholder": "输入您的邮箱"
+        },
+        "password": {
+          "label": "密码",
+          "placeholder": "设置密码"
+        },
+        "confirmPassword": {
+          "label": "确认密码",
+          "placeholder": "再次输入密码"
+        }
+      },
+      "messages": {
+        "duplicateUser": "该登录名或邮箱已被使用",
+        "genericError": "注册时发生错误",
+        "success": "注册成功！即将跳转到登录页..."
+      },
+      "actions": {
+        "submit": {
+          "idle": "注册",
+          "loading": "注册中..."
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "找回密码",
+      "description": "输入登录名以接收重置链接",
+      "fields": {
+        "login": {
+          "label": "登录名",
+          "placeholder": "输入您的登录名"
+        }
+      },
+      "messages": {
+        "userNotFound": "未找到此登录名的用户",
+        "tokenError": "生成重置令牌失败",
+        "emailError": "邮件发送失败，请稍后再试",
+        "unknownError": "发生未知错误，请稍后再试",
+        "successTitle": "邮件已发送！",
+        "successDescription": "重置链接已发送至您的邮箱。",
+        "checkSpam": "请检查垃圾邮件文件夹！",
+        "goToReset": "前往重置页面",
+        "backToLogin": "返回登录"
+      },
+      "actions": {
+        "submit": {
+          "idle": "发送链接",
+          "loading": "发送中..."
+        }
+      }
+    },
+    "resetPassword": {
+      "title": "设置新密码",
+      "description": "请输入新的登录密码",
+      "invalidLink": "重置链接无效或已过期。",
+      "messages": {
+        "invalidToken": "令牌无效",
+        "sessionExpired": "会话已过期",
+        "updateError": "更新密码失败",
+        "unknownError": "发生未知错误，请稍后再试",
+        "success": "密码修改成功！即将跳转到登录页...",
+        "requestNewLink": "重新获取链接"
+      },
+      "fields": {
+        "password": {
+          "label": "新密码",
+          "placeholder": "输入新密码"
+        },
+        "confirmPassword": {
+          "label": "确认密码",
+          "placeholder": "再次输入新密码"
+        }
+      },
+      "actions": {
+        "submit": {
+          "idle": "保存新密码",
+          "loading": "保存中..."
+        },
+        "backToLogin": "返回登录"
+      }
+    }
+  },
+  "validation": {
+    "login": {
+      "minLength": "登录名至少需要 2 个字符",
+      "maxLength": "登录名不能超过 20 个字符",
+      "pattern": "登录名只能包含字母、数字或下划线",
+      "required": "请输入登录名"
+    },
+    "email": {
+      "invalid": "请输入正确的邮箱地址"
+    },
+    "password": {
+      "minLength": "密码至少需要 6 个字符",
+      "complexity": "密码需包含大写字母、小写字母和数字",
+      "mismatch": "两次输入的密码不一致"
+    },
+    "token": {
+      "invalidOrExpired": "链接无效或已过期",
+      "checkError": "验证链接时出现错误"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "主页",
+      "description": "四个服务的仪表盘即将上线",
+      "debugTitle": "调试信息",
+      "currentLanguage": "当前语言",
+      "dictionaryTitle": "词典标题"
+    },
+    "news": {
+      "title": "新闻",
+      "items": [
+        {
+          "id": 1,
+          "title": "新版本上线",
+          "date": "2024-01-15",
+          "excerpt": "我们发布了平台的更新版本"
+        },
+        {
+          "id": 2,
+          "title": "计划维护",
+          "date": "2024-01-10",
+          "excerpt": "周末将进行系统维护"
+        },
+        {
+          "id": 3,
+          "title": "新增功能",
+          "date": "2024-01-05",
+          "excerpt": "新增多项用户功能"
+        }
+      ]
+    },
+    "catarium": {
+      "title": "Catarium",
+      "description": "平台的核心信息页面"
+    },
+    "laborMarket": {
+      "title": "人才市场",
+      "description": "人才市场简介页面"
+    },
+    "politics": {
+      "title": "政治结构",
+      "description": "政治体系概览"
+    },
+    "vacancies": {
+      "title": "职位空缺",
+      "items": [
+        {
+          "id": 1,
+          "title": "前端开发",
+          "company": "Tech Corp",
+          "location": "莫斯科",
+          "salary": "月薪 150 000 ₽ 起"
+        },
+        {
+          "id": 2,
+          "title": "后端开发",
+          "company": "Data Systems",
+          "location": "圣彼得堡",
+          "salary": "月薪 180 000 ₽ 起"
+        },
+        {
+          "id": 3,
+          "title": "UI/UX 设计师",
+          "company": "Creative Agency",
+          "location": "远程办公",
+          "salary": "月薪 120 000 ₽ 起"
+        }
+      ]
+    },
+    "testDb": {
+      "title": "数据库测试",
+      "error": "错误",
+      "foundUsers": "查询到的用户数量"
+    }
+  }
+}
+

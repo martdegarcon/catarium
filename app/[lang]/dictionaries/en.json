@@ -1,0 +1,272 @@
+{
+  "app": {
+    "brand": "Catarium"
+  },
+  "navigation": {
+    "home": "Home",
+    "catarium": "Catarium",
+    "news": "News",
+    "work": "Careers",
+    "politics": "Politics"
+  },
+  "sidebar": {
+    "menuLabel": "Menu",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "theme": {
+      "label": "Theme",
+      "options": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    }
+  },
+  "userMenu": {
+    "fallbackName": "User",
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": {
+      "label": "Language",
+      "description": "Language selection",
+      "ru": "Russian",
+      "en": "English",
+      "zh": "Chinese"
+    },
+    "logout": "Sign out"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "Enter your credentials to access the platform",
+      "fields": {
+        "login": {
+          "label": "Login",
+          "placeholder": "Type your login"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Type your password"
+        }
+      },
+      "actions": {
+        "submit": {
+          "idle": "Sign in",
+          "loading": "Signing in..."
+        },
+        "forgotPassword": "Forgot password?"
+      },
+      "messages": {
+        "invalidCredentials": "Invalid login or password",
+        "genericError": "Unable to sign in. Please try again."
+      }
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Fill in the form to create a new account",
+      "fields": {
+        "login": {
+          "label": "Login",
+          "placeholder": "Choose a login"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Your email address"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Create a password"
+        },
+        "confirmPassword": {
+          "label": "Confirm password",
+          "placeholder": "Repeat the password"
+        }
+      },
+      "messages": {
+        "duplicateUser": "A user with this login or email already exists",
+        "genericError": "Unexpected error during registration",
+        "success": "Registration successful! Redirecting to the sign-in page..."
+      },
+      "actions": {
+        "submit": {
+          "idle": "Create account",
+          "loading": "Creating..."
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "Password recovery",
+      "description": "Enter your login to receive a reset link",
+      "fields": {
+        "login": {
+          "label": "Login",
+          "placeholder": "Type your login"
+        }
+      },
+      "messages": {
+        "userNotFound": "No user found with this login",
+        "tokenError": "Unable to create reset token",
+        "emailError": "Unable to send the email. Try again later.",
+        "unknownError": "Unexpected error. Please try again.",
+        "successTitle": "Instructions sent!",
+        "successDescription": "A reset link has been sent to the email connected to your account.",
+        "checkSpam": "Don't forget to check the spam folder!",
+        "goToReset": "Open reset page",
+        "backToLogin": "Back to sign in"
+      },
+      "actions": {
+        "submit": {
+          "idle": "Send link",
+          "loading": "Sending..."
+        }
+      }
+    },
+    "resetPassword": {
+      "title": "New password",
+      "description": "Choose a new password for your account",
+      "invalidLink": "Invalid or expired password reset link.",
+      "messages": {
+        "invalidToken": "Invalid token",
+        "sessionExpired": "Session expired",
+        "updateError": "Failed to update password",
+        "unknownError": "Unexpected error. Please try again.",
+        "success": "Password updated! Redirecting to the sign-in page...",
+        "requestNewLink": "Request a new link"
+      },
+      "fields": {
+        "password": {
+          "label": "New password",
+          "placeholder": "Enter a new password"
+        },
+        "confirmPassword": {
+          "label": "Confirm password",
+          "placeholder": "Repeat the new password"
+        }
+      },
+      "actions": {
+        "submit": {
+          "idle": "Save new password",
+          "loading": "Updating password..."
+        },
+        "backToLogin": "Back to sign in"
+      }
+    }
+  },
+  "validation": {
+    "login": {
+      "minLength": "Login must contain at least 2 characters",
+      "maxLength": "Login must not exceed 20 characters",
+      "pattern": "Login may only include letters, numbers and underscores",
+      "required": "Enter your login"
+    },
+    "email": {
+      "invalid": "Enter a valid email address"
+    },
+    "password": {
+      "minLength": "Password must contain at least 6 characters",
+      "complexity": "Password must contain an uppercase letter, a lowercase letter and a digit",
+      "mismatch": "Passwords do not match"
+    },
+    "token": {
+      "invalidOrExpired": "Invalid or expired link",
+      "checkError": "Unable to verify the token"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "description": "Dashboard with four services will live here",
+      "debugTitle": "Debug info",
+      "currentLanguage": "Current language",
+      "dictionaryTitle": "Dictionary heading"
+    },
+    "news": {
+      "title": "News",
+      "loading": "Loading news...",
+      "error": "Error loading news",
+      "sections": {
+        "society": {
+          "title": "Society",
+          "subtitle": "More society news",
+          "category": "Society"
+        },
+        "technology": {
+          "title": "Technology",
+          "subtitle": "More technology news",
+          "category": "Technology"
+        },
+        "economy": {
+          "title": "Economy",
+          "subtitle": "More economy news",
+          "category": "Economy"
+        },
+        "mostRead": {
+          "title": "Most Read"
+        }
+      },
+      "items": [
+        {
+          "id": 1,
+          "title": "New release",
+          "date": "2024-01-15",
+          "excerpt": "We shipped an updated version of the platform"
+        },
+        {
+          "id": 2,
+          "title": "Scheduled maintenance",
+          "date": "2024-01-10",
+          "excerpt": "Weekend maintenance is planned"
+        },
+        {
+          "id": 3,
+          "title": "Fresh capabilities",
+          "date": "2024-01-05",
+          "excerpt": "New capabilities are available for users"
+        }
+      ]
+    },
+    "catarium": {
+      "title": "Catarium",
+      "description": "Central overview of the platform"
+    },
+    "laborMarket": {
+      "title": "Labor market",
+      "description": "Labor market landing page"
+    },
+    "politics": {
+      "title": "Politics",
+      "description": "Overview of the political system"
+    },
+    "vacancies": {
+      "title": "Open roles",
+      "items": [
+        {
+          "id": 1,
+          "title": "Frontend developer",
+          "company": "Tech Corp",
+          "location": "Moscow",
+          "salary": "from 150 000 ₽"
+        },
+        {
+          "id": 2,
+          "title": "Backend developer",
+          "company": "Data Systems",
+          "location": "Saint Petersburg",
+          "salary": "from 180 000 ₽"
+        },
+        {
+          "id": 3,
+          "title": "UI/UX designer",
+          "company": "Creative Agency",
+          "location": "Remote",
+          "salary": "from 120 000 ₽"
+        }
+      ]
+    },
+    "testDb": {
+      "title": "Database test",
+      "error": "Error",
+      "foundUsers": "Users found"
+    }
+  }
+}
