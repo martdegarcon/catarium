@@ -201,7 +201,8 @@
         "hotNews": "Горячая новость",
         "archiveNews": "Архив новостей",
         "author": "Автор",
-        "readingTime": "Время чтения"
+        "readingTime": "Время чтения",
+        "showMore": "Показать еще"
       },
       "sections": {
         "society": {

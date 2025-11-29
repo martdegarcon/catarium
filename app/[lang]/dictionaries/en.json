@@ -201,7 +201,8 @@
         "hotNews": "Hot News",
         "archiveNews": "News Archive",
         "author": "Author",
-        "readingTime": "Reading time"
+        "readingTime": "Reading time",
+        "showMore": "Show more"
       },
       "sections": {
         "society": {

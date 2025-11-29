@@ -66,7 +66,13 @@ export function useNews(locale: Locale) {
 
     // Если currentDay увеличился, загружаем только новую hot новость
     if (currentDay > previousDay && initialNewsQuery.data && currentDay > 1) {
-      fetchUpdateNews(locale).then((response) => {
+      // Используем React Query для загрузки новой новости (с кэшированием и retry)
+      queryClient.fetchQuery<NewsResponse>({
+        queryKey: ["news", locale, "update", currentDay],
+        queryFn: () => fetchUpdateNews(locale),
+        staleTime: Infinity, // Не устаревает, так как это исторические данные
+        retry: 2, // Повторяем запрос до 2 раз при ошибке
+      }).then((response) => {
         if (response.news && response.news.length > 0) {
           const newHotNews = response.news[0]; // Берем первую (и единственную) новость
           
@@ -76,25 +82,29 @@ export function useNews(locale: Locale) {
             (oldData) => {
               if (!oldData) return oldData;
 
-              const updatedNews = [...oldData.news];
-              
-              // Проверяем, есть ли уже эта новость в списке по sorted_order
-              const existingIndex = updatedNews.findIndex(
+              // Проверяем, есть ли уже эта новость по sorted_order
+              const existingIndex = oldData.news.findIndex(
                 (n) => (n as any).sorted_order === (newHotNews as any).sorted_order
               );
 
-              if (existingIndex === -1) {
-                // Новая новость еще не в списке, добавляем её
-                updatedNews.push(newHotNews);
-                // Сортируем по дате от старых к новым и пересчитываем sorted_order
-                updatedNews.sort((a, b) => 
-                  new Date(a.published_at).getTime() - new Date(b.published_at).getTime()
-                );
-                // Пересчитываем sorted_order для всех новостей
-                updatedNews.forEach((item, index) => {
-                  (item as any).sorted_order = index + 1;
-                });
+              if (existingIndex !== -1) {
+                // Новость уже есть в кэше, просто обновляем currentDay
+                return {
+                  ...oldData,
+                  currentDay: response.currentDay,
+                };
               }
+
+              // Новая новость еще не в списке - добавляем её
+              // Данные уже отсортированы на сервере по sorted_order
+              const updatedNews = [...oldData.news, newHotNews];
+              
+              // Сортируем по sorted_order (данные уже отсортированы на сервере)
+              updatedNews.sort((a, b) => {
+                const orderA = (a as any).sorted_order || 0;
+                const orderB = (b as any).sorted_order || 0;
+                return orderA - orderB;
+              });
 
               return {
                 ...oldData,
