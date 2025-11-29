@@ -18,6 +18,15 @@ export function proxy(request: Request) {
   const url = new URL(request.url);
   const { pathname } = url;
 
+  // Пропускаем статические файлы (изображения, иконки и т.д.)
+  if (
+    pathname.startsWith("/image/") ||
+    pathname.startsWith("/icons/") ||
+    /\.(svg|png|jpg|jpeg|gif|webp|ico)$/i.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
   // ============ 1. ЛОКАЛИ ============
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
@@ -61,5 +70,7 @@ export function proxy(request: Request) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico).*)"],
+  // Исключаем статические файлы из обработки middleware
+  // Проверка расширений файлов делается внутри middleware, здесь только базовые пути
+  matcher: ["/((?!_next|api|favicon.ico|image|icons).*)"],
 };

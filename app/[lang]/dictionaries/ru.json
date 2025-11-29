@@ -184,6 +184,25 @@
       "title": "Новости",
       "loading": "Загрузка новостей...",
       "error": "Ошибка при загрузке новостей",
+      "tabs": {
+        "all": "Все",
+        "politics": "Политика",
+        "economy": "Экономика",
+        "society": "Общество",
+        "technology": "Технологии",
+        "culture": "Культура"
+      },
+      "emptyState": {
+        "noNews": "Новостей пока нет",
+        "noNewsInCategory": "Новостей в этой категории пока нет",
+        "noImage": "Нет изображения"
+      },
+      "labels": {
+        "hotNews": "Горячая новость",
+        "archiveNews": "Архив новостей",
+        "author": "Автор",
+        "readingTime": "Время чтения"
+      },
       "sections": {
         "society": {
           "title": "Общество",

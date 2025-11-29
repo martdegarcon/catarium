@@ -10,6 +10,8 @@ export type NewsItem = {
   image_url: string;
   published_at: string;
   reading_time?: string;
+  author?: string; // Автор новости
   status?: 'hot' | 'archive' | 'scheduled'; // Статус новости
+  day_number?: number; // Номер дня в расписании пользователя
 };
 
