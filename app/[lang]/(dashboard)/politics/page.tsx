@@ -1,17 +1,18 @@
-import { getDictionary } from "../../dictionaries";
+import { Suspense } from "react";
+import { getDictionary, type Locale } from "../../dictionaries";
+import { PoliticsScreen } from "./ui/politics-screen";
 
 export default async function PoliticsPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dictionary = await getDictionary(lang);
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-bold">{dict.pages.politics.title}</h1>
-      <p className="text-muted-foreground">{dict.pages.politics.description}</p>
-    </div>
+    <Suspense fallback={<div className="animate-pulse">Загрузка...</div>}>
+      <PoliticsScreen locale={lang} dictionary={dictionary} />
+    </Suspense>
   );
 }

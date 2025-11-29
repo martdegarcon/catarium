@@ -1,0 +1,100 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { usePoliticians } from "../model/usePoliticians";
+import type { Locale } from "../../../dictionaries";
+import type { Dictionary } from "@/types/dictionary";
+import type { Politician } from "../model/types";
+import { PoliticianCardCompact } from "@/components/features/politics/politician-card-compact";
+import { PoliticianFilters } from "@/components/features/politics/politician-filters";
+
+type PoliticiansTabProps = {
+  locale: Locale;
+  dictionary: Dictionary;
+};
+
+export function PoliticiansTab({ locale, dictionary }: PoliticiansTabProps) {
+  const { politicians, isLoading, error } = usePoliticians();
+  const [filteredPoliticians, setFilteredPoliticians] = useState<Politician[]>(politicians);
+
+  // Обновляем filteredPoliticians когда politicians загрузились
+  useMemo(() => {
+    if (politicians.length > 0) {
+      setFilteredPoliticians(politicians);
+    }
+  }, [politicians]);
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+        {dictionary.pages.politics.loading}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto w-full max-w-7xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+        {dictionary.pages.politics.error}
+      </div>
+    );
+  }
+
+  if (politicians.length === 0) {
+    return (
+      <div className="mx-auto w-full max-w-7xl rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+        {dictionary.pages.politics.emptyState.noPoliticians}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Фильтры */}
+      <PoliticianFilters
+        politicians={politicians}
+        onFiltered={setFilteredPoliticians}
+        dictionary={dictionary}
+        locale={locale}
+      />
+
+      {/* Информация о результатах */}
+      {filteredPoliticians.length !== politicians.length && (
+        <div className="rounded-lg border border-border/50 bg-muted/50 p-3 text-sm text-muted-foreground">
+          {dictionary.pages.politics.messages.foundPoliticians}: <span className="font-semibold text-foreground">{filteredPoliticians.length}</span>
+          {filteredPoliticians.length !== politicians.length && (
+            <span className="ml-2">({dictionary.pages.politics.messages.outOf} {politicians.length} {dictionary.pages.politics.messages.total})</span>
+          )}
+        </div>
+      )}
+
+      {/* Список политиков - компактный вид */}
+      {filteredPoliticians.length === 0 ? (
+        <div className="rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+          {dictionary.pages.politics.messages.noPoliticiansFiltered}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {/* Заголовки колонок (десктоп) */}
+          <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-2 text-xs font-semibold text-muted-foreground border-b border-border/50">
+            <div className="col-span-3">{dictionary.pages.politics.tableHeaders.name}</div>
+            <div className="col-span-2">{dictionary.pages.politics.tableHeaders.birthday}</div>
+            <div className="col-span-2">{dictionary.pages.politics.tableHeaders.province}</div>
+            <div className="col-span-3">{dictionary.pages.politics.tableHeaders.party}</div>
+            <div className="col-span-1">{dictionary.pages.politics.tableHeaders.family}</div>
+            <div className="col-span-1">{dictionary.pages.politics.tableHeaders.children}</div>
+          </div>
+          {filteredPoliticians.map((politician) => (
+            <PoliticianCardCompact
+              key={politician.uuid}
+              politician={politician}
+              locale={locale}
+              dictionary={dictionary}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+

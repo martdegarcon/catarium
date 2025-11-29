@@ -54,7 +54,9 @@
           "idle": "Войти",
           "loading": "Вход..."
         },
-        "forgotPassword": "Забыли пароль?"
+        "forgotPassword": "Забыли пароль?",
+        "noAccount": "Нет аккаунта?",
+        "createAccount": "Создать аккаунт"
       },
       "messages": {
         "invalidCredentials": "Неверный логин или пароль",
@@ -91,7 +93,9 @@
         "submit": {
           "idle": "Зарегистрироваться",
           "loading": "Регистрация..."
-        }
+        },
+        "hasAccount": "Уже есть аккаунт?",
+        "signIn": "Войти"
       }
     },
     "forgotPassword": {
@@ -297,7 +301,86 @@
     },
     "politics": {
       "title": "Политика",
-      "description": "Страничка политического устройства"
+      "description": "Страничка политического устройства",
+      "loading": "Загрузка...",
+      "error": "Ошибка при загрузке данных",
+      "tabs": {
+        "home": "Главная",
+        "persons": "Персоны",
+        "parties": "Партии",
+        "political-structure": "Политическое устройство"
+      },
+      "labels": {
+        "back": "Назад",
+        "birthday": "Дата рождения",
+        "gender": "Пол",
+        "province": "Регион",
+        "isMarried": "Семейное положение",
+        "marriedStatus": "в браке",
+        "notMarriedStatus": "не в браке",
+        "children": "Дети",
+        "militaryService": "Военная служба",
+        "militaryServiceYes": "да",
+        "militaryServiceNo": "нет",
+        "education": "Образование",
+        "educationLevel": "Уровень образования",
+        "politicalParty": "Политическая партия",
+        "position": "Должность",
+        "isActive": "Активен",
+        "notActive": "Неактивна",
+        "partyMembers": "Члены партии",
+        "ministryMembers": "Члены министерства",
+        "governmentMembers": "Члены правительства",
+        "government": "Правительство",
+        "ministries": "Министерства",
+        "parties": "Партии",
+        "politicalStructure": "Схема политического устройства",
+        "showAllMinistries": "Показать все министерства",
+        "noPoliticians": "Политиков пока нет",
+        "noParties": "Партий пока нет",
+        "noMinistries": "Министерств пока нет",
+        "noGovernment": "Нет данных о правительстве",
+        "description": "Описание",
+        "membersCount": "Количество членов",
+        "viewDetails": "Подробнее"
+      },
+      "emptyState": {
+        "noPoliticians": "Политиков пока нет",
+        "noParties": "Партий пока нет",
+        "noMinistries": "Министерств пока нет",
+        "noGovernment": "Нет данных о правительстве"
+      },
+      "sections": {
+        "statistics": "Статистика",
+        "topPoliticians": "Топ политики",
+        "activeParties": "Активные партии",
+        "currentGovernment": "Текущее правительство"
+      },
+      "stats": {
+        "totalPoliticians": "Всего политиков",
+        "activeParties": "Активных партий",
+        "totalMinistries": "Министерств",
+        "governmentMembers": "В правительстве",
+        "members": "членов",
+        "viewAll": "Смотреть все",
+        "viewAllParties": "Все партии",
+        "viewAllPoliticians": "Все политики",
+        "moreDetails": "Подробнее"
+      },
+      "tableHeaders": {
+        "name": "Имя",
+        "birthday": "Дата рождения",
+        "province": "Регион",
+        "party": "Партия",
+        "family": "Семья",
+        "children": "Дети"
+      },
+      "messages": {
+        "foundPoliticians": "Найдено политиков",
+        "outOf": "из",
+        "total": "всего",
+        "noPoliticiansFiltered": "Политики не найдены по заданным фильтрам"
+      }
     },
     "vacancies": {
       "title": "Вакансии",

@@ -54,7 +54,9 @@
           "idle": "Sign in",
           "loading": "Signing in..."
         },
-        "forgotPassword": "Forgot password?"
+        "forgotPassword": "Forgot password?",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create account"
       },
       "messages": {
         "invalidCredentials": "Invalid login or password",
@@ -91,7 +93,9 @@
         "submit": {
           "idle": "Create account",
           "loading": "Creating..."
-        }
+        },
+        "hasAccount": "Already have an account?",
+        "signIn": "Sign in"
       }
     },
     "forgotPassword": {
@@ -297,7 +301,86 @@
     },
     "politics": {
       "title": "Politics",
-      "description": "Overview of the political system"
+      "description": "Overview of the political system",
+      "loading": "Loading...",
+      "error": "Error loading data",
+      "tabs": {
+        "home": "Home",
+        "persons": "Persons",
+        "parties": "Parties",
+        "political-structure": "Political Structure"
+      },
+      "labels": {
+        "back": "Back",
+        "birthday": "Birthday",
+        "gender": "Gender",
+        "province": "Province",
+        "isMarried": "Marital Status",
+        "marriedStatus": "married",
+        "notMarriedStatus": "not married",
+        "children": "Children",
+        "militaryService": "Military Service",
+        "militaryServiceYes": "yes",
+        "militaryServiceNo": "no",
+        "education": "Education",
+        "educationLevel": "Education Level",
+        "politicalParty": "Political Party",
+        "position": "Position",
+        "isActive": "Active",
+        "notActive": "Inactive",
+        "partyMembers": "Party Members",
+        "ministryMembers": "Ministry Members",
+        "governmentMembers": "Government Members",
+        "government": "Government",
+        "ministries": "Ministries",
+        "parties": "Parties",
+        "politicalStructure": "Political Structure Diagram",
+        "showAllMinistries": "Show All Ministries",
+        "noPoliticians": "No politicians yet",
+        "noParties": "No parties yet",
+        "noMinistries": "No ministries yet",
+        "noGovernment": "No government data",
+        "description": "Description",
+        "membersCount": "Members Count",
+        "viewDetails": "View Details"
+      },
+      "emptyState": {
+        "noPoliticians": "No politicians yet",
+        "noParties": "No parties yet",
+        "noMinistries": "No ministries yet",
+        "noGovernment": "No government data"
+      },
+      "sections": {
+        "statistics": "Statistics",
+        "topPoliticians": "Top Politicians",
+        "activeParties": "Active Parties",
+        "currentGovernment": "Current Government"
+      },
+      "stats": {
+        "totalPoliticians": "Total Politicians",
+        "activeParties": "Active Parties",
+        "totalMinistries": "Ministries",
+        "governmentMembers": "In Government",
+        "members": "members",
+        "viewAll": "View All",
+        "viewAllParties": "All Parties",
+        "viewAllPoliticians": "All Politicians",
+        "moreDetails": "More Details"
+      },
+      "tableHeaders": {
+        "name": "Name",
+        "birthday": "Birthday",
+        "province": "Province",
+        "party": "Party",
+        "family": "Family",
+        "children": "Children"
+      },
+      "messages": {
+        "foundPoliticians": "Found politicians",
+        "outOf": "out of",
+        "total": "total",
+        "noPoliticiansFiltered": "No politicians found matching the filters"
+      }
     },
     "vacancies": {
       "title": "Open roles",
