@@ -182,6 +182,48 @@
     },
     "news": {
       "title": "新闻",
+      "loading": "加载新闻中...",
+      "error": "加载新闻时出错",
+      "tabs": {
+        "all": "全部",
+        "politics": "政治",
+        "economy": "经济",
+        "society": "社会",
+        "technology": "技术",
+        "culture": "文化"
+      },
+      "emptyState": {
+        "noNews": "暂无新闻",
+        "noNewsInCategory": "此类别暂无新闻",
+        "noImage": "无图片"
+      },
+      "labels": {
+        "hotNews": "热门新闻",
+        "archiveNews": "新闻档案",
+        "author": "作者",
+        "readingTime": "阅读时间",
+        "showMore": "显示更多"
+      },
+      "sections": {
+        "society": {
+          "title": "社会",
+          "subtitle": "更多社会新闻",
+          "category": "社会"
+        },
+        "technology": {
+          "title": "技术",
+          "subtitle": "更多技术新闻",
+          "category": "技术"
+        },
+        "economy": {
+          "title": "经济",
+          "subtitle": "更多经济新闻",
+          "category": "经济"
+        },
+        "mostRead": {
+          "title": "最受欢迎"
+        }
+      },
       "items": [
         {
           "id": 1,

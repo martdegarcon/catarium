@@ -184,6 +184,26 @@
       "title": "News",
       "loading": "Loading news...",
       "error": "Error loading news",
+      "tabs": {
+        "all": "All",
+        "politics": "Politics",
+        "economy": "Economy",
+        "society": "Society",
+        "technology": "Technology",
+        "culture": "Culture"
+      },
+      "emptyState": {
+        "noNews": "No news yet",
+        "noNewsInCategory": "No news in this category yet",
+        "noImage": "No image"
+      },
+      "labels": {
+        "hotNews": "Hot News",
+        "archiveNews": "News Archive",
+        "author": "Author",
+        "readingTime": "Reading time",
+        "showMore": "Show more"
+      },
       "sections": {
         "society": {
           "title": "Society",
