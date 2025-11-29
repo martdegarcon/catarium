@@ -138,12 +138,26 @@ export function LoginForm() {
           </form>
         </Form>
 
-        <Link
-          href={`/${locale}/forgot-password`}
-          className="text-sm text-blue-600 hover:underline"
-        >
-          {dictionary.auth.login.actions.forgotPassword}
-        </Link>
+        <div className="flex flex-col items-center gap-3 pt-2">
+          <Link
+            href={`/${locale}/forgot-password`}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {dictionary.auth.login.actions.forgotPassword}
+          </Link>
+          
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted-foreground">
+              {dictionary.auth.login.actions.noAccount}
+            </span>
+            <Link
+              href={`/${locale}/register`}
+              className="font-medium text-primary hover:underline"
+            >
+              {dictionary.auth.login.actions.createAccount}
+            </Link>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

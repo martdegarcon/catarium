@@ -54,7 +54,9 @@
           "idle": "登录",
           "loading": "登录中..."
         },
-        "forgotPassword": "忘记密码？"
+        "forgotPassword": "忘记密码？",
+        "noAccount": "没有账户？",
+        "createAccount": "创建账户"
       },
       "messages": {
         "invalidCredentials": "登录名或密码错误",
@@ -91,7 +93,9 @@
         "submit": {
           "idle": "注册",
           "loading": "注册中..."
-        }
+        },
+        "hasAccount": "已有账户？",
+        "signIn": "登录"
       }
     },
     "forgotPassword": {
@@ -252,11 +256,131 @@
     },
     "laborMarket": {
       "title": "人才市场",
-      "description": "人才市场简介页面"
+      "description": "人才市场简介页面",
+      "loading": "加载中...",
+      "error": "加载数据时出错",
+      "tabs": {
+        "home": "首页",
+        "news": "新闻",
+        "companies": "公司",
+        "vacancies": "职位"
+      },
+      "labels": {
+        "employeeCount": "员工人数",
+        "averageSalary": "平均工资",
+        "foundedYear": "成立年份",
+        "authorizedCapital": "注册资本",
+        "netProfit": "净利润",
+        "balance": "余额",
+        "viewVacancies": "查看职位",
+        "back": "返回",
+        "salary": "薪资",
+        "location": "地点",
+        "employmentType": "就业类型",
+        "requirements": "要求",
+        "companyOverview": "公司概览",
+        "noVacancies": "暂无职位",
+        "employmentTypes": {
+          "full-time": "全职",
+          "part-time": "兼职",
+          "contract": "合同",
+          "remote": "远程",
+          "hybrid": "混合"
+        }
+      },
+      "emptyState": {
+        "noCompanies": "暂无公司",
+        "noVacancies": "暂无职位",
+        "noNews": "暂无新闻"
+      },
+      "sections": {
+        "latestNews": "最新新闻",
+        "topCompanies": "顶级公司",
+        "recentVacancies": "最近职位"
+      }
     },
     "politics": {
       "title": "政治结构",
-      "description": "政治体系概览"
+      "description": "政治体系概览",
+      "loading": "加载中...",
+      "error": "加载数据错误",
+      "tabs": {
+        "home": "主页",
+        "persons": "人物",
+        "parties": "政党",
+        "political-structure": "政治结构"
+      },
+      "labels": {
+        "back": "返回",
+        "birthday": "生日",
+        "gender": "性别",
+        "province": "省份",
+        "isMarried": "婚姻状况",
+        "marriedStatus": "已婚",
+        "notMarriedStatus": "未婚",
+        "children": "子女",
+        "militaryService": "兵役",
+        "militaryServiceYes": "是",
+        "militaryServiceNo": "否",
+        "education": "教育",
+        "educationLevel": "教育水平",
+        "politicalParty": "政党",
+        "position": "职位",
+        "isActive": "活跃",
+        "notActive": "非活跃",
+        "partyMembers": "党员",
+        "ministryMembers": "部委成员",
+        "governmentMembers": "政府成员",
+        "government": "政府",
+        "ministries": "部委",
+        "parties": "政党",
+        "politicalStructure": "政治结构图",
+        "showAllMinistries": "显示所有部委",
+        "noPoliticians": "暂无政治家",
+        "noParties": "暂无政党",
+        "noMinistries": "暂无部委",
+        "noGovernment": "无政府数据",
+        "description": "描述",
+        "membersCount": "成员数量",
+        "viewDetails": "查看详情"
+      },
+      "emptyState": {
+        "noPoliticians": "暂无政治家",
+        "noParties": "暂无政党",
+        "noMinistries": "暂无部委",
+        "noGovernment": "无政府数据"
+      },
+      "sections": {
+        "statistics": "统计",
+        "topPoliticians": "顶级政治家",
+        "activeParties": "活跃政党",
+        "currentGovernment": "当前政府"
+      },
+      "stats": {
+        "totalPoliticians": "总政治家数",
+        "activeParties": "活跃政党",
+        "totalMinistries": "部委",
+        "governmentMembers": "在政府中",
+        "members": "成员",
+        "viewAll": "查看全部",
+        "viewAllParties": "所有政党",
+        "viewAllPoliticians": "所有政治家",
+        "moreDetails": "更多详情"
+      },
+      "tableHeaders": {
+        "name": "姓名",
+        "birthday": "出生日期",
+        "province": "省份",
+        "party": "政党",
+        "family": "家庭",
+        "children": "子女"
+      },
+      "messages": {
+        "foundPoliticians": "找到政治家",
+        "outOf": "共",
+        "total": "总计",
+        "noPoliticiansFiltered": "未找到符合筛选条件的政治家"
+      }
     },
     "vacancies": {
       "title": "职位空缺",

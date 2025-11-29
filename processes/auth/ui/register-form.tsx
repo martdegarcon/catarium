@@ -29,6 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import Link from "next/link";
 import { useDictionary } from "@/hooks/use-dictionary";
 
 export function RegisterForm() {
@@ -222,6 +223,18 @@ export function RegisterForm() {
             </Button>
           </form>
         </Form>
+
+        <div className="flex items-center justify-center gap-2 pt-4 text-sm border-t">
+          <span className="text-muted-foreground">
+            {dictionary.auth.register.actions.hasAccount}
+          </span>
+          <Link
+            href={`/${locale}/login`}
+            className="font-medium text-primary hover:underline"
+          >
+            {dictionary.auth.register.actions.signIn}
+          </Link>
+        </div>
       </CardContent>
     </Card>
   );
