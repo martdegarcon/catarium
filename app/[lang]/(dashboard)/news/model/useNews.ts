@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import type { NewsItem } from "./types";
 import type { Locale } from "../../../dictionaries";
 
@@ -10,13 +10,20 @@ type NewsResponse = {
   currentDay: number;
 };
 
-const STORAGE_KEY = (locale: Locale) => `news_${locale}`;
-
-// Загрузка всех новостей (только при первой загрузке)
-async function fetchAllNews(locale: Locale): Promise<NewsResponse> {
-  const res = await fetch(`/api/news?locale=${locale}`);
+// Загрузка всех новостей до currentDay (первая загрузка)
+async function fetchInitialNews(locale: Locale): Promise<NewsResponse> {
+  const res = await fetch(`/api/news/initial?locale=${locale}`);
   if (!res.ok) {
     throw new Error("Ошибка при загрузке новостей");
+  }
+  return res.json();
+}
+
+// Загрузка только новой hot новости (обновление)
+async function fetchUpdateNews(locale: Locale): Promise<NewsResponse> {
+  const res = await fetch(`/api/news/update?locale=${locale}`);
+  if (!res.ok) {
+    throw new Error("Ошибка при загрузке обновления");
   }
   return res.json();
 }
@@ -31,34 +38,15 @@ async function fetchCurrentDay(locale: Locale): Promise<number> {
   return data.currentDay;
 }
 
-// Загрузка новостей из localStorage
-function loadNewsFromStorage(locale: Locale): NewsItem[] | null {
-  if (typeof window === "undefined") return null;
-  
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY(locale));
-    if (stored) {
-      return JSON.parse(stored) as NewsItem[];
-    }
-  } catch (error) {
-    console.error("Failed to load news from localStorage:", error);
-  }
-  return null;
-}
-
 export function useNews(locale: Locale) {
-  // Загружаем новости из localStorage сразу для мгновенного отображения
-  const [cachedNews, setCachedNews] = useState<NewsItem[] | null>(() => 
-    loadNewsFromStorage(locale)
-  );
-  
-  // Загружаем все новости только при первой загрузке (если нет в кэше)
-  const allNewsQuery = useQuery<NewsResponse, Error>({
-    queryKey: ["news", locale, "all"], 
-    queryFn: () => fetchAllNews(locale),
-    staleTime: Infinity, // Новости не устаревают, они статичны
+  const queryClient = useQueryClient();
+
+  // Загружаем все новости до currentDay при первой загрузке
+  const initialNewsQuery = useQuery<NewsResponse, Error>({
+    queryKey: ["news", locale, "initial"], 
+    queryFn: () => fetchInitialNews(locale),
+    staleTime: Infinity, // Не устаревают, так как новости статичны
     refetchOnWindowFocus: false,
-    enabled: !cachedNews, // Загружаем только если нет в кэше
   });
 
   // Загружаем currentDay отдельно (обновляется каждые 30 секунд)
@@ -68,28 +56,64 @@ export function useNews(locale: Locale) {
     staleTime: 0, // Всегда обновляем currentDay
     refetchInterval: 30000, // Обновляем каждые 30 секунд
     refetchOnWindowFocus: true,
-    enabled: true, // Запускаем сразу
+    enabled: true,
   });
 
-  // Сохраняем новости в localStorage при загрузке
+  // Отслеживаем изменения currentDay и загружаем только новую hot новость
   useEffect(() => {
-    if (allNewsQuery.data?.news) {
-      try {
-        localStorage.setItem(STORAGE_KEY(locale), JSON.stringify(allNewsQuery.data.news));
-        setCachedNews(allNewsQuery.data.news);
-      } catch (error) {
-        console.error("Failed to save news to localStorage:", error);
-      }
+    const previousDay = initialNewsQuery.data?.currentDay || 1;
+    const currentDay = currentDayQuery.data || initialNewsQuery.data?.currentDay || 1;
+
+    // Если currentDay увеличился, загружаем только новую hot новость
+    if (currentDay > previousDay && initialNewsQuery.data && currentDay > 1) {
+      fetchUpdateNews(locale).then((response) => {
+        if (response.news && response.news.length > 0) {
+          const newHotNews = response.news[0]; // Берем первую (и единственную) новость
+          
+          // Обновляем кэш: добавляем новую hot новость
+          queryClient.setQueryData<NewsResponse>(
+            ["news", locale, "initial"],
+            (oldData) => {
+              if (!oldData) return oldData;
+
+              const updatedNews = [...oldData.news];
+              
+              // Проверяем, есть ли уже эта новость в списке по sorted_order
+              const existingIndex = updatedNews.findIndex(
+                (n) => (n as any).sorted_order === (newHotNews as any).sorted_order
+              );
+
+              if (existingIndex === -1) {
+                // Новая новость еще не в списке, добавляем её
+                updatedNews.push(newHotNews);
+                // Сортируем по дате от старых к новым и пересчитываем sorted_order
+                updatedNews.sort((a, b) => 
+                  new Date(a.published_at).getTime() - new Date(b.published_at).getTime()
+                );
+                // Пересчитываем sorted_order для всех новостей
+                updatedNews.forEach((item, index) => {
+                  (item as any).sorted_order = index + 1;
+                });
+              }
+
+              return {
+                ...oldData,
+                news: updatedNews,
+                currentDay: response.currentDay,
+              };
+            }
+          );
+        }
+      }).catch((error) => {
+        console.error("Failed to fetch update news:", error);
+      });
     }
-  }, [allNewsQuery.data?.news, locale]);
+  }, [currentDayQuery.data, locale, queryClient, initialNewsQuery.data]);
 
-  // Используем новости из кэша или из запроса
-  const news = cachedNews || allNewsQuery.data?.news || [];
-  const currentDay = currentDayQuery.data || allNewsQuery.data?.currentDay || 1;
-
-  // isLoading = true только если нет кэша и идет загрузка
-  const isLoading = !cachedNews && allNewsQuery.isLoading;
-  const error = allNewsQuery.error || currentDayQuery.error;
+  const news = initialNewsQuery.data?.news || [];
+  const currentDay = currentDayQuery.data || initialNewsQuery.data?.currentDay || 1;
+  const isLoading = initialNewsQuery.isLoading;
+  const error = initialNewsQuery.error || currentDayQuery.error;
 
   return {
     data: {
@@ -100,4 +124,3 @@ export function useNews(locale: Locale) {
     error,
   };
 }
-

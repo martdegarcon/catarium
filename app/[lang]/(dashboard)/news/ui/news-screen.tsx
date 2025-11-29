@@ -6,7 +6,7 @@ import type { NewsItem } from "../model/types";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { Button } from "@/components/ui/button";
-import { Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { Image as ImageIcon } from "lucide-react";
 
 type NewsScreenProps = {
   locale: Locale;
@@ -18,9 +18,6 @@ type TabCategory = "all" | "politics" | "economy" | "society" | "technology" | "
 export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
   const { data: newsResponse, isLoading, error } = useNews(locale);
   const [selectedTab, setSelectedTab] = useState<TabCategory>("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  const NEWS_PER_PAGE = 10; // Количество новостей на странице
   
   // Извлекаем новости и currentDay из ответа
   const data = newsResponse?.news || [];
@@ -113,44 +110,34 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
     };
   }, [categoryMapping]);
 
-  // Сначала сортируем все новости от старых к новым по дате публикации
-  // Это дает нам последовательный порядок всех 180 новостей
-  const sortedAllNews = useMemo(() => {
-    if (!data || data.length === 0) return [];
-    
-    // Сортируем все новости от старых к новым по дате
-    return [...data].sort((a, b) => 
-      new Date(a.published_at).getTime() - new Date(b.published_at).getTime()
-    );
-  }, [data]);
-
-  // Определяем hot и archive среди всех новостей (до фильтрации по категориям)
-  // Hot: новость на позиции currentDay - 1 в отсортированном списке (день 1 = индекс 0)
-  // Archive: все новости до currentDay
+  // Определяем hot и archive по sorted_order (позиция в отсортированном по дате списке)
+  // Все новости отсортированы по дате от старых к новым
+  // Hot: новость с sorted_order === currentDay (на позиции currentDay в отсортированном списке)
+  // Archive: все новости с sorted_order < currentDay (все более старые новости)
   const { allHotNews, allArchiveNews } = useMemo(() => {
-    if (!sortedAllNews || sortedAllNews.length === 0) return { allHotNews: null, allArchiveNews: [] };
+    if (!data || data.length === 0) return { allHotNews: null, allArchiveNews: [] };
     
-    const hotIndex = currentDay - 1;
-    const hot = hotIndex >= 0 && hotIndex < sortedAllNews.length ? sortedAllNews[hotIndex] : null;
-    const archive = hotIndex > 0 ? sortedAllNews.slice(0, hotIndex) : [];
+    // Данные уже отсортированы по дате от старых к новым
+    // Hot: новость на позиции currentDay (sorted_order === currentDay)
+    const hot = data.find(item => {
+      const sortedOrder = (item as any).sorted_order;
+      return sortedOrder === currentDay;
+    }) || null;
+    
+    // Archive: все новости до позиции currentDay (sorted_order < currentDay)
+    const archive = data.filter(item => {
+      const sortedOrder = (item as any).sorted_order;
+      return sortedOrder !== undefined && sortedOrder < currentDay;
+    });
     
     return { 
       allHotNews: hot, 
       allArchiveNews: archive 
     };
-  }, [sortedAllNews, currentDay]);
-
-  // Фильтрация новостей по выбранной вкладке
-  const filteredData = useMemo(() => {
-    if (!sortedAllNews || sortedAllNews.length === 0) return [];
-    
-    return selectedTab === "all" 
-      ? sortedAllNews 
-      : sortedAllNews.filter(item => getNewsCategory(item) === selectedTab);
-  }, [sortedAllNews, selectedTab, getNewsCategory]);
+  }, [data, currentDay]);
 
   // Фильтруем hot и archive по выбранной категории
-  const { hotNews, archiveNews, paginatedNews, totalPages } = useMemo(() => {
+  const { hotNews, archiveNews } = useMemo(() => {
     // Hot новость: если она попадает в выбранную категорию, показываем её
     const hot = allHotNews && (
       selectedTab === "all" || getNewsCategory(allHotNews) === selectedTab
@@ -166,35 +153,11 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
     );
     
-    // Для вкладки "Все" объединяем hot и archive и применяем пагинацию
-    if (selectedTab === "all") {
-      const allNews = [...hot, ...sortedArchive]; // Hot первой, затем архив
-      const total = Math.ceil(allNews.length / NEWS_PER_PAGE);
-      const startIndex = (currentPage - 1) * NEWS_PER_PAGE;
-      const endIndex = startIndex + NEWS_PER_PAGE;
-      const paginated = allNews.slice(startIndex, endIndex);
-      
-      return { 
-        hotNews: [], 
-        archiveNews: [], 
-        paginatedNews: paginated, 
-        totalPages: total 
-      };
-    }
-    
-    // Для других вкладок показываем hot и archive без пагинации
     return { 
       hotNews: hot, 
-      archiveNews: sortedArchive, 
-      paginatedNews: [], 
-      totalPages: 1 
+      archiveNews: sortedArchive
     };
-  }, [allHotNews, allArchiveNews, selectedTab, getNewsCategory, currentPage, NEWS_PER_PAGE]);
-  
-  // Сбрасываем на первую страницу при смене вкладки
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedTab]);
+  }, [allHotNews, allArchiveNews, selectedTab, getNewsCategory]);
 
   if (isLoading) {
     return (
@@ -224,7 +187,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
   }
 
   // Проверяем, есть ли новости после фильтрации
-  if (filteredData.length === 0) {
+  if ((hotNews.length === 0 && archiveNews.length === 0) && !isLoading) {
     return (
       <div className="space-y-8">
         <h1 className="text-3xl font-bold">{dictionary.pages.news.title}</h1>
@@ -274,26 +237,21 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
         ))}
       </div>
       
-      {/* Для вкладки "Все" - показываем пагинированные новости */}
-      {selectedTab === "all" && paginatedNews.length > 0 && (
-        <div className="space-y-4">
-          <div className="grid gap-4">
-            {paginatedNews.map((item) => {
-              const isHot = item.id === allHotNews?.id;
-              return (
-                <div 
-                  key={item.id} 
-                  className={`rounded-lg border p-4 hover:bg-muted/50 transition-colors ${
-                    isHot ? 'border-2 border-red-500 bg-red-50 dark:bg-red-950/20' : ''
-                  }`}
-                >
-                  {isHot && (
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="inline-flex items-center rounded-full bg-red-500 px-3 py-1 text-sm font-semibold text-white">
-                        🔥 HOT
-                      </span>
-                    </div>
-                  )}
+      {/* Для всех вкладок показываем hot и archive */}
+      {selectedTab === "all" && (
+        <>
+          {/* Горячая новость - показываем отдельно */}
+          {hotNews.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-red-500 px-3 py-1 text-sm font-semibold text-white">
+                  🔥 HOT
+                </span>
+                <h2 className="text-2xl font-bold">{dictionary.pages.news.labels?.hotNews || "Горячая новость"}</h2>
+              </div>
+              
+              {hotNews.map((item) => (
+                <div key={item.id} className="rounded-lg border-2 border-red-500 bg-red-50 dark:bg-red-950/20 p-6">
                   <div className="flex gap-4">
                     {/* Картинка слева */}
                     <div className="flex-shrink-0">
@@ -313,11 +271,9 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
                     </div>
                     
                     {/* Контент справа */}
-                    <div className="flex-1 space-y-2">
-                      <h3 className={`font-semibold ${isHot ? 'text-lg' : 'text-lg'}`}>{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {item.content.slice(0, 200)}...
-                      </p>
+                    <div className="flex-1 space-y-3">
+                      <h2 className="text-2xl font-bold">{item.title}</h2>
+                      <p className="text-base leading-relaxed">{item.content}</p>
                       {item.category && (
                         <div className="flex flex-wrap gap-2">
                           <span className="inline-flex items-center rounded-md bg-blue-100 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-800 dark:text-blue-200">
@@ -327,11 +283,11 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
                       )}
                       {item.author && (
                         <div>
-                          <span className="text-xs font-semibold text-muted-foreground">{dictionary.pages.news.labels?.author || "Автор"}: </span>
-                          <span className="text-xs font-medium">{item.author}</span>
+                          <span className="text-sm font-semibold text-muted-foreground">{dictionary.pages.news.labels?.author || "Автор"}: </span>
+                          <span className="text-sm font-medium">{item.author}</span>
                         </div>
                       )}
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span>
                           {new Date(item.published_at).toLocaleDateString(localeMap[locale], {
                             year: 'numeric',
@@ -346,62 +302,74 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-          
-          {/* Пагинация */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 pt-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                disabled={currentPage === 1}
-              >
-                <ChevronLeft className="w-4 h-4" />
-                Предыдущая
-              </Button>
-              
-              <div className="flex items-center gap-1">
-                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  let pageNum: number;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (currentPage <= 3) {
-                    pageNum = i + 1;
-                  } else if (currentPage >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = currentPage - 2 + i;
-                  }
-                  
-                  return (
-                    <Button
-                      key={pageNum}
-                      variant={currentPage === pageNum ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setCurrentPage(pageNum)}
-                      className="w-10"
-                    >
-                      {pageNum}
-                    </Button>
-                  );
-                })}
-              </div>
-              
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages}
-              >
-                Следующая
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+              ))}
             </div>
           )}
-        </div>
+
+          {/* Архивные новости - показываем списком */}
+          {archiveNews.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">{dictionary.pages.news.labels?.archiveNews || "Архив новостей"}</h2>
+              <div className="grid gap-4">
+                {archiveNews.map((item) => (
+                  <div key={item.id} className="rounded-lg border p-4 hover:bg-muted/50 transition-colors">
+                    <div className="flex gap-4">
+                      {/* Картинка слева */}
+                      <div className="flex-shrink-0">
+                        <img
+                          src={getLocalImageUrl(item.id)}
+                          alt={item.title}
+                          className="w-[150px] h-[150px] rounded-lg object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (placeholder) placeholder.style.display = 'flex';
+                          }}
+                        />
+                        <div className="w-[150px] h-[150px] bg-muted rounded-lg flex items-center justify-center hidden">
+                          <ImageIcon className="w-8 h-8 text-muted-foreground" />
+                        </div>
+                      </div>
+                      
+                      {/* Контент справа */}
+                      <div className="flex-1 space-y-2">
+                        <h3 className="text-lg font-semibold">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {item.content.slice(0, 200)}...
+                        </p>
+                        {item.category && (
+                          <div className="flex flex-wrap gap-2">
+                            <span className="inline-flex items-center rounded-md bg-blue-100 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-800 dark:text-blue-200">
+                              {item.category}
+                            </span>
+                          </div>
+                        )}
+                        {item.author && (
+                          <div>
+                            <span className="text-xs font-semibold text-muted-foreground">{dictionary.pages.news.labels?.author || "Автор"}: </span>
+                            <span className="text-xs font-medium">{item.author}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          <span>
+                            {new Date(item.published_at).toLocaleDateString(localeMap[locale], {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </span>
+                          {item.reading_time && (
+                            <span>{dictionary.pages.news.labels?.readingTime || "Время чтения"}: {item.reading_time}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
       
       {/* Для других вкладок - показываем hot и archive как обычно */}

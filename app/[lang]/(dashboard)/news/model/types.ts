@@ -13,5 +13,7 @@ export type NewsItem = {
   author?: string; // Автор новости
   status?: 'hot' | 'archive' | 'scheduled'; // Статус новости
   day_number?: number; // Номер дня в расписании пользователя
+  sorted_order?: number; // Порядок в отсортированном по дате списке (1-180)
+  is_hot?: boolean; // Флаг hot новости
 };
 
