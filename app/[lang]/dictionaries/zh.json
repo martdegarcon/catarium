@@ -202,7 +202,8 @@
         "archiveNews": "新闻档案",
         "author": "作者",
         "readingTime": "阅读时间",
-        "showMore": "显示更多"
+        "showMore": "显示更多",
+        "back": "返回新闻"
       },
       "sections": {
         "society": {
@@ -287,6 +288,33 @@
       "title": "数据库测试",
       "error": "错误",
       "foundUsers": "查询到的用户数量"
+    }
+  },
+  "newsNavbar": {
+    "days": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+    "currency": {
+      "usd": "USD: 75.34 ₽",
+      "eur": "EUR: 82.16 ₽",
+      "cny": "CNY: 10.45 ₽"
+    },
+    "weather": "莫斯科: +22°C, 多云",
+    "categories": {
+      "economy": {
+        "name": "经济",
+        "path": "/economy"
+      },
+      "technology": {
+        "name": "技术",
+        "path": "/technology"
+      },
+      "society": {
+        "name": "社会",
+        "path": "/society"
+      },
+      "culture": {
+        "name": "文化",
+        "path": "/culture"
+      }
     }
   }
 }

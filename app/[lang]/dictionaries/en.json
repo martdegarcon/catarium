@@ -202,7 +202,8 @@
         "archiveNews": "News Archive",
         "author": "Author",
         "readingTime": "Reading time",
-        "showMore": "Show more"
+        "showMore": "Show more",
+        "back": "Back to News"
       },
       "sections": {
         "society": {
@@ -287,6 +288,33 @@
       "title": "Database test",
       "error": "Error",
       "foundUsers": "Users found"
+    }
+  },
+  "newsNavbar": {
+    "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "currency": {
+      "usd": "USD: 75.34 ₽",
+      "eur": "EUR: 82.16 ₽",
+      "cny": "CNY: 10.45 ₽"
+    },
+    "weather": "Moscow: +22°C, cloudy",
+    "categories": {
+      "economy": {
+        "name": "Economy",
+        "path": "/economy"
+      },
+      "technology": {
+        "name": "Technology",
+        "path": "/technology"
+      },
+      "society": {
+        "name": "Society",
+        "path": "/society"
+      },
+      "culture": {
+        "name": "Culture",
+        "path": "/culture"
+      }
     }
   }
 }
