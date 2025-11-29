@@ -252,7 +252,48 @@
     },
     "laborMarket": {
       "title": "Labor market",
-      "description": "Labor market landing page"
+      "description": "Labor market landing page",
+      "loading": "Loading...",
+      "error": "Error loading data",
+      "tabs": {
+        "home": "Home",
+        "news": "News",
+        "companies": "Companies",
+        "vacancies": "Vacancies"
+      },
+      "labels": {
+        "employeeCount": "Employees",
+        "averageSalary": "Average salary",
+        "foundedYear": "Founded",
+        "authorizedCapital": "Authorized capital",
+        "netProfit": "Net profit",
+        "balance": "Balance",
+        "viewVacancies": "View vacancies",
+        "back": "Back",
+        "salary": "Salary",
+        "location": "Location",
+        "employmentType": "Employment type",
+        "requirements": "Requirements",
+        "companyOverview": "Company overview",
+        "noVacancies": "No vacancies available",
+        "employmentTypes": {
+          "full-time": "Full-time",
+          "part-time": "Part-time",
+          "contract": "Contract",
+          "remote": "Remote",
+          "hybrid": "Hybrid"
+        }
+      },
+      "emptyState": {
+        "noCompanies": "No companies yet",
+        "noVacancies": "No vacancies yet",
+        "noNews": "No news yet"
+      },
+      "sections": {
+        "latestNews": "Latest news",
+        "topCompanies": "Top companies",
+        "recentVacancies": "Recent vacancies"
+      }
     },
     "politics": {
       "title": "Politics",

@@ -252,7 +252,48 @@
     },
     "laborMarket": {
       "title": "Биржа труда",
-      "description": "Страничка биржи труда"
+      "description": "Страничка биржи труда",
+      "loading": "Загрузка...",
+      "error": "Ошибка при загрузке данных",
+      "tabs": {
+        "home": "Главная",
+        "news": "Новости",
+        "companies": "Компании",
+        "vacancies": "Вакансии"
+      },
+      "labels": {
+        "employeeCount": "Количество сотрудников",
+        "averageSalary": "Средняя зарплата",
+        "foundedYear": "Год создания",
+        "authorizedCapital": "Уставной капитал",
+        "netProfit": "Чистая прибыль",
+        "balance": "Баланс",
+        "viewVacancies": "Посмотреть вакансии",
+        "back": "Назад",
+        "salary": "Зарплата",
+        "location": "Локация",
+        "employmentType": "Тип занятости",
+        "requirements": "Требования",
+        "companyOverview": "Обзор компании",
+        "noVacancies": "У компании пока нет вакансий",
+        "employmentTypes": {
+          "full-time": "Полная занятость",
+          "part-time": "Частичная занятость",
+          "contract": "Контракт",
+          "remote": "Удаленная работа",
+          "hybrid": "Гибридная"
+        }
+      },
+      "emptyState": {
+        "noCompanies": "Компаний пока нет",
+        "noVacancies": "Вакансий пока нет",
+        "noNews": "Новостей пока нет"
+      },
+      "sections": {
+        "latestNews": "Последние новости",
+        "topCompanies": "Топ компаний",
+        "recentVacancies": "Недавние вакансии"
+      }
     },
     "politics": {
       "title": "Политика",

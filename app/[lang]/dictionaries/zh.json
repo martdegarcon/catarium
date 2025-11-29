@@ -252,7 +252,48 @@
     },
     "laborMarket": {
       "title": "人才市场",
-      "description": "人才市场简介页面"
+      "description": "人才市场简介页面",
+      "loading": "加载中...",
+      "error": "加载数据时出错",
+      "tabs": {
+        "home": "首页",
+        "news": "新闻",
+        "companies": "公司",
+        "vacancies": "职位"
+      },
+      "labels": {
+        "employeeCount": "员工人数",
+        "averageSalary": "平均工资",
+        "foundedYear": "成立年份",
+        "authorizedCapital": "注册资本",
+        "netProfit": "净利润",
+        "balance": "余额",
+        "viewVacancies": "查看职位",
+        "back": "返回",
+        "salary": "薪资",
+        "location": "地点",
+        "employmentType": "就业类型",
+        "requirements": "要求",
+        "companyOverview": "公司概览",
+        "noVacancies": "暂无职位",
+        "employmentTypes": {
+          "full-time": "全职",
+          "part-time": "兼职",
+          "contract": "合同",
+          "remote": "远程",
+          "hybrid": "混合"
+        }
+      },
+      "emptyState": {
+        "noCompanies": "暂无公司",
+        "noVacancies": "暂无职位",
+        "noNews": "暂无新闻"
+      },
+      "sections": {
+        "latestNews": "最新新闻",
+        "topCompanies": "顶级公司",
+        "recentVacancies": "最近职位"
+      }
     },
     "politics": {
       "title": "政治结构",

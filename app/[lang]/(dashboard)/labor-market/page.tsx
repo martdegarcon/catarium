@@ -1,17 +1,18 @@
-import { getDictionary } from "../../dictionaries";
+import { Suspense } from "react";
+import { getDictionary, type Locale } from "../../dictionaries";
+import { LaborMarketScreen } from "./ui/labor-market-screen";
 
 export default async function LaborMarketPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dictionary = await getDictionary(lang);
 
-    return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-bold">{dict.pages.laborMarket.title}</h1>
-      <p className="text-muted-foreground">{dict.pages.laborMarket.description}</p>
-        </div>
+  return (
+    <Suspense fallback={<div className="animate-pulse">Загрузка...</div>}>
+      <LaborMarketScreen locale={lang} dictionary={dictionary} />
+    </Suspense>
   );
 }
