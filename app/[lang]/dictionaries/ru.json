@@ -202,7 +202,8 @@
         "archiveNews": "Архив новостей",
         "author": "Автор",
         "readingTime": "Время чтения",
-        "showMore": "Показать еще"
+        "showMore": "Показать еще",
+        "back": "Назад к новостям"
       },
       "sections": {
         "society": {
@@ -287,6 +288,33 @@
       "title": "Проверка базы данных",
       "error": "Ошибка",
       "foundUsers": "Найдено пользователей"
+    }
+  },
+  "newsNavbar": {
+    "days": ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+    "currency": {
+      "usd": "USD: 75.34 ₽",
+      "eur": "EUR: 82.16 ₽",
+      "cny": "CNY: 10.45 ₽"
+    },
+    "weather": "Москва: +22°C, облачно",
+    "categories": {
+      "economy": {
+        "name": "Экономика",
+        "path": "/economy"
+      },
+      "technology": {
+        "name": "Технологии",
+        "path": "/technology"
+      },
+      "society": {
+        "name": "Общество",
+        "path": "/society"
+      },
+      "culture": {
+        "name": "Культура",
+        "path": "/culture"
+      }
     }
   }
 }
