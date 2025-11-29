@@ -16,20 +16,17 @@ type NewsScreenProps = {
 type TabCategory = "all" | "politics" | "economy" | "society" | "technology" | "culture";
 
 export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
-  const { data: newsResponse, isLoading, error } = useNews(locale);
+  const { data: newsResponse, isLoading, error, loadMoreArchive } = useNews(locale);
   const [selectedTab, setSelectedTab] = useState<TabCategory>("all");
-  const [visibleArchiveCount, setVisibleArchiveCount] = useState(10); // Показываем по 10 новостей
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   
   // Извлекаем новости и currentDay из ответа
   const data = newsResponse?.news || [];
   const currentDay = newsResponse?.currentDay || 1;
+  const totalArchive = newsResponse?.totalArchive || 0;
+  const loadedArchive = newsResponse?.loadedArchive || 0;
 
   const tabs: TabCategory[] = ["all", "politics", "economy", "society", "technology", "culture"];
-
-  // Сбрасываем лимит при смене вкладки
-  useEffect(() => {
-    setVisibleArchiveCount(10);
-  }, [selectedTab]);
 
   // Функция для получения пути к локальному изображению на основе ID новости
   // Игнорируем image_url из БД, используем только локальные файлы из public/image/
@@ -116,34 +113,25 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
     };
   }, [categoryMapping]);
 
-  // Определяем hot и archive по sorted_order (позиция в отсортированном по дате списке)
-  // Все новости отсортированы по дате от старых к новым
-  // Hot: новость с sorted_order === currentDay (на позиции currentDay в отсортированном списке)
-  // Archive: все новости с sorted_order < currentDay (все более старые новости)
+  // Определяем hot и archive по флагу is_hot (приходит с сервера)
+  // API уже возвращает данные с правильной разметкой
   const { allHotNews, allArchiveNews } = useMemo(() => {
     if (!data || data.length === 0) return { allHotNews: null, allArchiveNews: [] };
     
-    // Данные уже отсортированы по дате от старых к новым
-    // Hot: новость на позиции currentDay (sorted_order === currentDay)
-    const hot = data.find(item => {
-      const sortedOrder = (item as any).sorted_order;
-      return sortedOrder === currentDay;
-    }) || null;
+    // Hot: новость с флагом is_hot === true
+    const hot = data.find(item => (item as any).is_hot === true) || null;
     
-    // Archive: все новости до позиции currentDay (sorted_order < currentDay)
-    const archive = data.filter(item => {
-      const sortedOrder = (item as any).sorted_order;
-      return sortedOrder !== undefined && sortedOrder < currentDay;
-    });
+    // Archive: все новости без флага is_hot (или с is_hot === false)
+    const archive = data.filter(item => !(item as any).is_hot);
     
     return { 
       allHotNews: hot, 
       allArchiveNews: archive 
     };
-  }, [data, currentDay]);
+  }, [data]);
 
   // Фильтруем hot и archive по выбранной категории
-  const { hotNews, archiveNews, paginatedArchiveNews, hasMoreArchive } = useMemo(() => {
+  const { hotNews, archiveNews, hasMoreArchive } = useMemo(() => {
     // Hot новость: если она попадает в выбранную категорию, показываем её
     const hot = allHotNews && (
       selectedTab === "all" || getNewsCategory(allHotNews) === selectedTab
@@ -158,22 +146,29 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
     const sortedArchive = [...archive].sort((a, b) => 
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
     );
-
-    // Берем только видимые новости для пагинации
-    const paginated = sortedArchive.slice(0, visibleArchiveCount);
-    const hasMore = sortedArchive.length > visibleArchiveCount;
+    
+    // Проверяем, есть ли еще новости для загрузки (только для вкладки "all")
+    const hasMore = selectedTab === "all" ? loadedArchive < totalArchive : false;
     
     return { 
       hotNews: hot, 
       archiveNews: sortedArchive,
-      paginatedArchiveNews: paginated,
       hasMoreArchive: hasMore,
     };
-  }, [allHotNews, allArchiveNews, selectedTab, getNewsCategory, visibleArchiveCount]);
+  }, [allHotNews, allArchiveNews, selectedTab, getNewsCategory, loadedArchive, totalArchive]);
 
-  // Функция для загрузки еще новостей
-  const loadMoreArchive = () => {
-    setVisibleArchiveCount(prev => prev + 10);
+  // Функция для загрузки еще архивных новостей с сервера
+  const handleLoadMore = async () => {
+    if (!loadMoreArchive || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    try {
+      await loadMoreArchive(loadedArchive);
+    } catch (error) {
+      console.error("Failed to load more archive news:", error);
+    } finally {
+      setIsLoadingMore(false);
+    }
   };
 
   if (isLoading) {
@@ -328,7 +323,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">{dictionary.pages.news.labels?.archiveNews || "Архив новостей"}</h2>
               <div className="grid gap-4">
-                {paginatedArchiveNews.map((item) => (
+                {archiveNews.map((item) => (
                   <div key={item.id} className="rounded-lg border p-4 hover:bg-muted/50 transition-colors">
                     <div className="flex gap-4">
                       {/* Картинка слева */}
@@ -390,10 +385,14 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
                 <div className="flex justify-center pt-4">
                   <Button
                     variant="outline"
-                    onClick={loadMoreArchive}
+                    onClick={handleLoadMore}
+                    disabled={isLoadingMore}
                     className="min-w-[200px]"
                   >
-                    {dictionary.pages.news.labels?.showMore || "Показать еще"}
+                    {isLoadingMore 
+                      ? (dictionary.pages.news.loading || "Загрузка...")
+                      : (dictionary.pages.news.labels?.showMore || "Показать еще")
+                    }
                   </Button>
                 </div>
               )}
@@ -486,7 +485,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">{dictionary.pages.news.labels?.archiveNews || "Архив новостей"}</h2>
               <div className="grid gap-4">
-                {paginatedArchiveNews.map((item) => (
+                {archiveNews.map((item) => (
                   <div key={item.id} className="rounded-lg border p-4 hover:bg-muted/50 transition-colors">
                     <div className="flex gap-4">
                       {/* Картинка слева */}
@@ -558,10 +557,14 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
                 <div className="flex justify-center pt-4">
                   <Button
                     variant="outline"
-                    onClick={loadMoreArchive}
+                    onClick={handleLoadMore}
+                    disabled={isLoadingMore}
                     className="min-w-[200px]"
                   >
-                    {dictionary.pages.news.labels?.showMore || "Показать еще"}
+                    {isLoadingMore 
+                      ? (dictionary.pages.news.loading || "Загрузка...")
+                      : (dictionary.pages.news.labels?.showMore || "Показать еще")
+                    }
                   </Button>
                 </div>
               )}

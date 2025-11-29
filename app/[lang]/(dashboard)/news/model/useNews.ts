@@ -8,13 +8,30 @@ import type { Locale } from "../../../dictionaries";
 type NewsResponse = {
   news: NewsItem[];
   currentDay: number;
+  totalArchive?: number;
+  loadedArchive?: number;
 };
 
-// Загрузка всех новостей до currentDay (первая загрузка)
+type ArchiveResponse = {
+  news: NewsItem[];
+  totalArchive: number;
+  loadedArchive: number;
+};
+
+// Загрузка hot + первых 10 архивных новостей (первая загрузка)
 async function fetchInitialNews(locale: Locale): Promise<NewsResponse> {
-  const res = await fetch(`/api/news/initial?locale=${locale}`);
+  const res = await fetch(`/api/news/initial?locale=${locale}&archiveLimit=10`);
   if (!res.ok) {
     throw new Error("Ошибка при загрузке новостей");
+  }
+  return res.json();
+}
+
+// Загрузка следующей порции архивных новостей
+async function fetchArchiveNews(locale: Locale, offset: number, limit: number = 10): Promise<ArchiveResponse> {
+  const res = await fetch(`/api/news/archive?locale=${locale}&offset=${offset}&limit=${limit}`);
+  if (!res.ok) {
+    throw new Error("Ошибка при загрузке архивных новостей");
   }
   return res.json();
 }
@@ -96,20 +113,32 @@ export function useNews(locale: Locale) {
               }
 
               // Новая новость еще не в списке - добавляем её
-              // Данные уже отсортированы на сервере по sorted_order
-              const updatedNews = [...oldData.news, newHotNews];
+              // Старая hot новость переходит в архив (убираем флаг is_hot)
+              const oldHotNews = oldData.news.find(item => (item as any).is_hot);
+              const existingArchive = oldData.news.filter(item => !(item as any).is_hot);
               
-              // Сортируем по sorted_order (данные уже отсортированы на сервере)
-              updatedNews.sort((a, b) => {
-                const orderA = (a as any).sorted_order || 0;
-                const orderB = (b as any).sorted_order || 0;
-                return orderA - orderB;
-              });
+              // Добавляем старую hot в архив (если она есть)
+              const updatedArchive = oldHotNews 
+                ? [...existingArchive, { ...oldHotNews, is_hot: false }]
+                : existingArchive;
+              
+              // Сортируем архив от новых к старым по дате
+              const sortedArchive = [...updatedArchive].sort((a, b) => 
+                new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+              );
+              
+              // Формируем итоговый список: новая hot + архив
+              const finalNews = [
+                { ...newHotNews, is_hot: true },
+                ...sortedArchive
+              ];
 
               return {
                 ...oldData,
-                news: updatedNews,
+                news: finalNews,
                 currentDay: response.currentDay,
+                totalArchive: (oldData.totalArchive || 0) + (oldHotNews ? 1 : 0), // Увеличиваем если старая hot перешла в архив
+                loadedArchive: sortedArchive.length,
               };
             }
           );
@@ -122,15 +151,55 @@ export function useNews(locale: Locale) {
 
   const news = initialNewsQuery.data?.news || [];
   const currentDay = currentDayQuery.data || initialNewsQuery.data?.currentDay || 1;
+  const totalArchive = initialNewsQuery.data?.totalArchive || 0;
+  const loadedArchive = initialNewsQuery.data?.loadedArchive || 0;
   const isLoading = initialNewsQuery.isLoading;
   const error = initialNewsQuery.error || currentDayQuery.error;
+
+  // Функция для загрузки следующей порции архивных новостей
+  const loadMoreArchive = async (currentLoadedCount: number) => {
+    const limit = 10;
+    const response = await queryClient.fetchQuery<ArchiveResponse>({
+      queryKey: ["news", locale, "archive", currentLoadedCount],
+      queryFn: () => fetchArchiveNews(locale, currentLoadedCount, limit),
+      staleTime: Infinity,
+      retry: 2,
+    });
+
+    // Обновляем кэш, добавляя новые архивные новости
+    queryClient.setQueryData<NewsResponse>(
+      ["news", locale, "initial"],
+      (oldData) => {
+        if (!oldData) return oldData;
+        
+        // Добавляем новые архивные новости к существующим
+        const existingArchive = oldData.news.filter(item => !(item as any).is_hot);
+        const newArchive = response.news;
+        const allArchive = [...existingArchive, ...newArchive];
+        
+        // Сохраняем hot новость отдельно
+        const hotNews = oldData.news.find(item => (item as any).is_hot);
+        
+        return {
+          ...oldData,
+          news: hotNews ? [hotNews, ...allArchive] : allArchive,
+          loadedArchive: allArchive.length,
+        };
+      }
+    );
+
+    return response;
+  };
 
   return {
     data: {
       news,
       currentDay,
+      totalArchive,
+      loadedArchive,
     },
     isLoading,
     error,
+    loadMoreArchive,
   };
 }

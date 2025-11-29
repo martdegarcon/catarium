@@ -1,9 +1,9 @@
 /**
  * API Route для первоначальной загрузки новостей пользователя
  * 
- * GET /api/news/initial?locale=ru
+ * GET /api/news/initial?locale=ru&archiveLimit=10
  * 
- * Возвращает все новости до currentDay (hot + все архивные)
+ * Возвращает hot новость + первые N архивных новостей (по умолчанию 10)
  * Используется при первой загрузке страницы
  */
 
@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
     const locale = searchParams.get("locale") || "ru";
     const validLocales = ["ru", "en", "zh"];
     const language = validLocales.includes(locale) ? locale : "ru";
+    const archiveLimit = parseInt(searchParams.get("archiveLimit") || "10", 10);
 
     const supabase = await createClient();
     const userId = session.user.id;
@@ -95,19 +96,39 @@ export async function GET(request: NextRequest) {
     // Hot новость = новость на позиции currentDay в отсортированном списке (от старых к новым)
     // Archive = все новости до позиции currentDay (более старые)
     // Важно: sortedByDate уже отсортированы от старых к новым по дате
-    const result = sortedByDate
-      .filter((item) => {
-        // Берем только новости до currentDay включительно
-        return item.sorted_order! <= currentDay;
-      })
-      .map((item) => ({
-        ...item,
-        is_hot: item.sorted_order === currentDay, // Помечаем hot новость
-      }));
+    
+    // Разделяем на hot и archive
+    const hotNewsItem = sortedByDate.find(item => item.sorted_order === currentDay);
+    const archiveNewsItems = sortedByDate.filter(item => item.sorted_order < currentDay);
+    
+    // Сортируем архив от новых к старым (самая новая из архива первой) для отображения
+    const sortedArchive = [...archiveNewsItems].sort((a, b) => 
+      new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+    );
+    
+    // Берем только первые N архивных новостей
+    const limitedArchive = sortedArchive.slice(0, archiveLimit);
+    
+    // Формируем результат: hot + первые N архивных
+    const result: any[] = [];
+    
+    if (hotNewsItem) {
+      result.push({
+        ...hotNewsItem,
+        is_hot: true,
+      });
+    }
+    
+    result.push(...limitedArchive.map(item => ({
+      ...item,
+      is_hot: false,
+    })));
 
     return NextResponse.json({
       news: result,
       currentDay,
+      totalArchive: archiveNewsItems.length, // Общее количество архивных новостей
+      loadedArchive: limitedArchive.length, // Загружено архивных новостей
     });
     
   } catch (error) {
