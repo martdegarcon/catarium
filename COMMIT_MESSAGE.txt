@@ -34,3 +34,4 @@ Components:
 - Create PoliticsTabs component for tab navigation
 - Add utility function formatChildren for proper Russian declension
 
+
