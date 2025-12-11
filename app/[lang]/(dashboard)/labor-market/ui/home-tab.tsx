@@ -7,6 +7,7 @@ import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { CompanyCard } from "@/components/features/labor-market/company-card";
 import { VacancyCard } from "@/components/features/labor-market/vacancy-card";
+import { HomeTabSkeleton } from "@/components/features/labor-market/labor-market-skeleton";
 import { formatCurrencyRange } from "@/components/features/labor-market/currency-utils";
 import Link from "next/link";
 import { ArrowRight, TrendingUp, Building2, Briefcase } from "lucide-react";
@@ -42,11 +43,7 @@ export function HomeTab({ locale, dictionary }: HomeTabProps) {
   const featuredVacancies = vacancies.slice(0, 3);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.laborMarket.loading}
-      </div>
-    );
+    return <HomeTabSkeleton />;
   }
 
   return (

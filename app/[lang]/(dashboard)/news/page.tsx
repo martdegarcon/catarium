@@ -4,10 +4,10 @@ import { NewsScreen } from "./ui/news-screen";
 export default async function NewsPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
   return <NewsScreen locale={lang} dictionary={dictionary} />;
 }

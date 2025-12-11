@@ -4,11 +4,11 @@ import { NewsDetailScreen } from "../ui/news-detail-screen";
 export default async function NewsDetailPage({
   params,
 }: {
-  params: Promise<{ lang: Locale; id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
-  return <NewsDetailScreen locale={lang} dictionary={dictionary} newsId={parseInt(id, 10)} />;
+  return <NewsDetailScreen locale={lang as Locale} dictionary={dictionary} newsId={parseInt(id, 10)} />;
 }
 

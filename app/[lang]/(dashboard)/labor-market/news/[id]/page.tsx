@@ -4,11 +4,11 @@ import { LaborMarketNewsDetailScreen } from "../../ui/labor-market-news-detail-s
 export default async function LaborMarketNewsDetailPage({
   params,
 }: {
-  params: Promise<{ lang: Locale; id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
-  return <LaborMarketNewsDetailScreen locale={lang} dictionary={dictionary} newsId={id} />;
+  return <LaborMarketNewsDetailScreen locale={lang as Locale} dictionary={dictionary} newsId={id} />;
 }
 

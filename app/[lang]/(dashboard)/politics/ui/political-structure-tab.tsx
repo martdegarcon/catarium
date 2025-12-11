@@ -22,7 +22,7 @@ export function PoliticalStructureTab({ locale, dictionary }: PoliticalStructure
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full animate-pulse rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.politics.loading}
       </div>
     );

@@ -5,6 +5,7 @@ import { usePoliticsStatistics } from "../model/usePoliticsStatistics";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { PartyCard } from "@/components/features/politics/party-card";
+import { PartiesTabSkeleton } from "@/components/features/politics/politics-skeleton";
 
 type PartiesTabProps = {
   locale: Locale;
@@ -22,16 +23,12 @@ export function PartiesTab({ locale, dictionary }: PartiesTabProps) {
   });
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.politics.loading}
-      </div>
-    );
+    return <PartiesTabSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+      <div className="w-full rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
         {dictionary.pages.politics.error}
       </div>
     );
@@ -39,7 +36,7 @@ export function PartiesTab({ locale, dictionary }: PartiesTabProps) {
 
   if (parties.length === 0) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.politics.emptyState.noParties}
       </div>
     );

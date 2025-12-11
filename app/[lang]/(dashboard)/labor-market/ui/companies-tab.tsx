@@ -7,6 +7,7 @@ import type { Dictionary } from "@/types/dictionary";
 import type { Company } from "../model/types";
 import { CompanyCard } from "@/components/features/labor-market/company-card";
 import { CompanyFilters } from "@/components/features/labor-market/company-filters";
+import { CompaniesTabSkeleton } from "@/components/features/labor-market/labor-market-skeleton";
 
 type CompaniesTabProps = {
   locale: Locale;
@@ -25,16 +26,12 @@ export function CompaniesTab({ locale, dictionary }: CompaniesTabProps) {
   }, [companies]);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.laborMarket.loading}
-      </div>
-    );
+    return <CompaniesTabSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+      <div className="w-full rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
         {dictionary.pages.laborMarket.error}
       </div>
     );
@@ -42,7 +39,7 @@ export function CompaniesTab({ locale, dictionary }: CompaniesTabProps) {
 
   if (companies.length === 0) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.laborMarket.emptyState.noCompanies}
       </div>
     );
@@ -59,7 +56,7 @@ export function CompaniesTab({ locale, dictionary }: CompaniesTabProps) {
 
       {/* Результаты */}
       {filteredCompanies.length === 0 ? (
-        <div className="mx-auto w-full max-w-7xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+        <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
           Компании не найдены
         </div>
       ) : (

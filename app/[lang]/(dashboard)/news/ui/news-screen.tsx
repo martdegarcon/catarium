@@ -9,6 +9,7 @@ import { NewsNavbar } from "@/components/features/news/navbar";
 import { NewsTabs } from "@/components/features/news/news-tabs";
 import { HotNewsSection } from "@/components/features/news/hot-news-section";
 import { ArchiveNewsList } from "@/components/features/news/archive-news-list";
+import { NewsScreenSkeleton } from "@/components/features/news/news-skeleton";
 import type { TabCategory } from "@/components/features/news/utils";
 
 type NewsScreenProps = {
@@ -53,9 +54,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
     return (
       <>
         <NewsNavbar locale={locale} />
-        <div className="mx-auto w-full max-w-5xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-          {dictionary.pages.news.loading}
-        </div>
+        <NewsScreenSkeleton />
       </>
     );
   }
@@ -64,7 +63,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
     return (
       <>
         <NewsNavbar locale={locale} />
-        <div className="mx-auto w-full max-w-5xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+        <div className="w-full rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
           {dictionary.pages.news.error}
         </div>
       </>
@@ -77,7 +76,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
         <NewsNavbar locale={locale} />
         <div className="space-y-8">
           <h1 className="text-3xl font-bold">{dictionary.pages.news.title}</h1>
-          <div className="mx-auto w-full max-w-5xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+          <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
             {dictionary.pages.news.emptyState?.noNews || "Новостей пока нет"}
           </div>
         </div>
@@ -98,7 +97,7 @@ export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
             onTabChange={setSelectedTab}
             dictionary={dictionary}
           />
-          <div className="mx-auto w-full max-w-5xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+          <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
             {dictionary.pages.news.emptyState?.noNewsInCategory ||
               "Новостей в этой категории пока нет"}
           </div>

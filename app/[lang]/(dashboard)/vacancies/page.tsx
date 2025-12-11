@@ -3,10 +3,10 @@ import { getDictionary } from "../../dictionaries";
 export default async function VacanciesPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as any);
   const vacancies = dict.pages.vacancies.items;
 
   return (

@@ -4,11 +4,11 @@ import { getDictionary } from "../dictionaries";
 export default async function TestDBPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const supabase = await createClient();
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as any);
 
   const { data: users, error } = await supabase.from("users").select("*");
 

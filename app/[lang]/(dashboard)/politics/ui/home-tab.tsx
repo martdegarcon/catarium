@@ -7,6 +7,7 @@ import { usePoliticsStatistics } from "../model/usePoliticsStatistics";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { PoliticianCard } from "@/components/features/politics/politician-card";
+import { HomeTabSkeleton } from "@/components/features/politics/politics-skeleton";
 import { 
   Users, 
   Building2, 
@@ -41,11 +42,7 @@ export function HomeTab({ locale, dictionary }: HomeTabProps) {
   const topParties = statistics?.partyCounts.slice(0, 4) || [];
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border border-border/50 bg-muted/50 p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.politics.loading}
-      </div>
-    );
+    return <HomeTabSkeleton />;
   }
 
   return (

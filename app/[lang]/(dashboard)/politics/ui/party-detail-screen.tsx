@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Building2, Users, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PartyDetailSkeleton } from "@/components/features/politics/politician-detail-skeleton";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { usePoliticalParty } from "../model/usePoliticalParties";
@@ -28,16 +29,12 @@ export function PartyDetailScreen({ locale, dictionary, partyId }: PartyDetailSc
   const { party, members, isLoading, error } = usePoliticalParty(partyId);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-5xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.politics.loading}
-      </div>
-    );
+    return <PartyDetailSkeleton />;
   }
 
   if (error || !party) {
     return (
-      <div className="mx-auto w-full max-w-5xl space-y-4">
+      <div className="w-full space-y-4">
         <Button
           variant="outline"
           onClick={() => router.back()}
@@ -54,7 +51,7 @@ export function PartyDetailScreen({ locale, dictionary, partyId }: PartyDetailSc
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-6">
+    <div className="w-full space-y-6">
       {/* Кнопка "Назад" */}
       <Link href={`/${lang}/politics?tab=parties`}>
         <Button variant="outline" className="mb-4">
