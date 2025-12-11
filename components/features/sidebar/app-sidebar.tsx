@@ -44,6 +44,15 @@ const navigationItems = [
   { key: "politics", url: "/politics", icon: Landmark },
 ] as const;
 
+/**
+ * Renders the brand entry for the sidebar as a menu item that links to `href`.
+ *
+ * When the sidebar is collapsed, displays a compact "C" square; when expanded, displays the full `label`.
+ *
+ * @param label - The text to display when the sidebar is expanded.
+ * @param href - The destination URL for the brand link.
+ * @returns A sidebar menu item element containing the brand link and appropriate collapsed/expanded presentation.
+ */
 function BrandMenuItem({ label, href }: { label: string; href: string }) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";

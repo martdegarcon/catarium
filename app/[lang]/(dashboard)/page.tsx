@@ -1,6 +1,12 @@
 import { getDictionary, type Locale } from "../dictionaries";
 import { Orbit, Newspaper, Briefcase, Landmark } from "lucide-react";
 
+/**
+ * Render the localized home page for a given language.
+ *
+ * @param params - A promise that resolves to an object with a `lang` locale code used to load the localization dictionary.
+ * @returns The home page JSX element populated with localized hero content (title, subtitle, description), an About card, and a Features grid with four localized feature cards.
+ */
 export default async function HomePage({
   params,
 }: {

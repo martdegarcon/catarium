@@ -25,6 +25,16 @@ async function fetchNewsDetail(newsId: number, locale: Locale): Promise<NewsItem
   return res.json();
 }
 
+/**
+ * Renders the News Detail screen for a specific news item, including navigation, metadata, image (with graceful fallback), content, and tags.
+ *
+ * Shows a skeleton while the news is loading and an error panel with a back button if loading fails or the news is missing.
+ *
+ * @param locale - The UI locale to use for fetching and formatting (e.g., "ru", "en", "zh").
+ * @param dictionary - Localization strings used for labels, buttons, and error messages.
+ * @param newsId - Identifier of the news item to load and display.
+ * @returns The rendered news detail UI containing navigation, metadata, image, content, and optional tags.
+ */
 export function NewsDetailScreen({ locale, dictionary, newsId }: NewsDetailScreenProps) {
   const router = useRouter();
   const params = useParams();
@@ -158,4 +168,3 @@ export function NewsDetailScreen({ locale, dictionary, newsId }: NewsDetailScree
     </>
   );
 }
-

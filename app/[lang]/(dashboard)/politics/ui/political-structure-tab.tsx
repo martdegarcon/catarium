@@ -13,6 +13,15 @@ type PoliticalStructureTabProps = {
   dictionary: Dictionary;
 };
 
+/**
+ * Render the political structure tab for the Politics page.
+ *
+ * Renders overview statistics, grouped government positions, ministries (up to six with an optional "show all" link), and an informational description; displays a localized loading placeholder while underlying data is being fetched.
+ *
+ * @param locale - Locale code used to construct internal links (e.g., routing segments)
+ * @param dictionary - Localized strings for labels, headings, and messages used in the UI
+ * @returns A JSX element that renders the political structure UI for the given locale and dictionary
+ */
 export function PoliticalStructureTab({ locale, dictionary }: PoliticalStructureTabProps) {
   const { government, isLoading: governmentLoading } = useGovernment();
   const { ministries, isLoading: ministriesLoading } = useMinistries();
@@ -161,4 +170,3 @@ export function PoliticalStructureTab({ locale, dictionary }: PoliticalStructure
     </div>
   );
 }
-

@@ -1,5 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Renders a skeleton layout that mimics the company detail page while data is loading.
+ *
+ * @returns A JSX element containing skeleton placeholders for the back button, company header (avatar and metadata), metrics grid, overview block, and vacancy cards.
+ */
 export function CompanyDetailSkeleton() {
   return (
     <div className="w-full space-y-8">
@@ -58,4 +63,3 @@ export function CompanyDetailSkeleton() {
     </div>
   );
 }
-

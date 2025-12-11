@@ -1,5 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Render a skeleton placeholder for the politician detail view.
+ *
+ * Renders skeleton elements that mirror the politician detail layout: a back button, header with avatar and title lines, a responsive personal info grid of six cards, an education section with two entries, and a political parties section with two entries.
+ *
+ * @returns A JSX element containing skeleton placeholders for the politician detail page layout
+ */
 export function PoliticianDetailSkeleton() {
   return (
     <div className="w-full space-y-6">
@@ -60,6 +67,15 @@ export function PoliticianDetailSkeleton() {
   );
 }
 
+/**
+ * Renders a skeleton placeholder UI for a political party detail view.
+ *
+ * The layout includes a back-button skeleton, a header block with title and action skeletons,
+ * a three-column info grid of card skeletons, and a party members section with a responsive
+ * grid of member cards (each showing an avatar and two text-line skeletons).
+ *
+ * @returns A JSX element containing skeleton placeholders for the party detail screen
+ */
 export function PartyDetailSkeleton() {
   return (
     <div className="w-full space-y-6">
@@ -107,4 +123,3 @@ export function PartyDetailSkeleton() {
     </div>
   );
 }
-

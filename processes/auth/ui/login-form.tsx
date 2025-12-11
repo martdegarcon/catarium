@@ -32,6 +32,14 @@ import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { useDictionary } from "@/hooks/use-dictionary";
 
+/**
+ * Render a localized login form that authenticates credentials and navigates on success.
+ *
+ * The component manages form state and validation, shows a loading indicator during submission,
+ * displays validation or authentication errors, and redirects to the current locale root on successful sign-in.
+ *
+ * @returns A React element containing the login form UI.
+ */
 export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

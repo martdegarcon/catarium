@@ -12,6 +12,17 @@ type PartiesTabProps = {
   dictionary: Dictionary;
 };
 
+/**
+ * Render a responsive list of political parties with loading, error, and empty states.
+ *
+ * Renders a loading skeleton while data is loading, an error message if fetching fails,
+ * an empty-state message when no parties are available, or a grid of PartyCard components
+ * annotated with member counts when data is present.
+ *
+ * @param locale - Locale used for formatting and language-specific presentation
+ * @param dictionary - Localized strings used for UI messages within the component
+ * @returns A React element showing the loading skeleton, error message, empty state, or a grid of parties
+ */
 export function PartiesTab({ locale, dictionary }: PartiesTabProps) {
   const { parties, isLoading, error } = usePoliticalParties();
   const { statistics } = usePoliticsStatistics();
@@ -56,4 +67,3 @@ export function PartiesTab({ locale, dictionary }: PartiesTabProps) {
     </div>
   );
 }
-

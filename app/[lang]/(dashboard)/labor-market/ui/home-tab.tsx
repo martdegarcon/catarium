@@ -29,6 +29,17 @@ const getLocalImageUrl = (newsId: string): string => {
   return `/image/${imageNumber}.png`;
 };
 
+/**
+ * Renders the labor market dashboard composed of news, company statistics, and active vacancies.
+ *
+ * The component fetches and displays featured and recent news, top companies, and recent vacancies,
+ * arranging them in a responsive bento-style grid and using the provided locale and dictionary for
+ * formatting and localized labels.
+ *
+ * @param locale - Locale identifier used for date/currency formatting and locale-aware routes
+ * @param dictionary - Localization strings for UI labels and section titles
+ * @returns The React element for the Home tab dashboard
+ */
 export function HomeTab({ locale, dictionary }: HomeTabProps) {
   const { companies, isLoading: companiesLoading } = useCompanies(locale);
   const { vacancies, isLoading: vacanciesLoading } = useVacancies(locale);

@@ -1,5 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Renders a skeleton placeholder card representing a news item.
+ *
+ * @returns A JSX element containing styled skeleton blocks that mimic a news card layout: large image area, title and metadata lines, and action/meta rows.
+ */
 export function NewsCardSkeleton() {
   return (
     <div className="rounded-lg border bg-card p-6 space-y-4">
@@ -22,6 +27,11 @@ export function NewsCardSkeleton() {
   );
 }
 
+/**
+ * Render a two-column skeleton layout showing a prominent news card alongside three compact placeholder items.
+ *
+ * @returns A JSX element containing the hot-news skeleton: one NewsCardSkeleton and a vertical stack of three small placeholder cards.
+ */
 export function HotNewsSkeleton() {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -39,6 +49,11 @@ export function HotNewsSkeleton() {
   );
 }
 
+/**
+ * Render a responsive grid of six news card skeletons.
+ *
+ * @returns A grid container holding six `NewsCardSkeleton` items with gaps between them; layout uses two columns at `md` breakpoint and three columns at `lg`.
+ */
 export function ArchiveNewsListSkeleton() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -49,6 +64,11 @@ export function ArchiveNewsListSkeleton() {
   );
 }
 
+/**
+ * Render the skeleton placeholder for the News screen, including tab placeholders, a hot-news section, and an archive grid.
+ *
+ * @returns The News screen's JSX skeleton layout displayed while real content is loading.
+ */
 export function NewsScreenSkeleton() {
   return (
     <div className="space-y-8">
@@ -73,4 +93,3 @@ export function NewsScreenSkeleton() {
     </div>
   );
 }
-

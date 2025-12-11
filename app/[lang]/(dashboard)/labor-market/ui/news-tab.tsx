@@ -23,6 +23,15 @@ const getLocalImageUrl = (newsId: string): string => {
   return `/image/${imageNumber}.png`;
 };
 
+/**
+ * Renders the labor market news tab with loading, error, empty, and populated states.
+ *
+ * Displays a responsive grid of news cards when items are available; each card shows an image (with a graceful fallback), optional category badge, title, excerpt, publication date formatted for the given locale, and optional reading time. While fetching, shows a loading placeholder; on error or when no news are available, shows an appropriate message from the provided dictionary.
+ *
+ * @param locale - Locale code used for links and date formatting (e.g., "en", "ru", "zh")
+ * @param dictionary - Localized strings used for loading, error, and empty-state messages
+ * @returns A React element containing the news tab UI
+ */
 export function NewsTab({ locale, dictionary }: NewsTabProps) {
   const { news, isLoading, error } = useLaborMarketNews(locale);
 

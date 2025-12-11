@@ -14,6 +14,13 @@ type CompaniesTabProps = {
   dictionary: Dictionary;
 };
 
+/**
+ * Renders the companies tab UI, handling loading, error, empty states, filtering, and display of company cards.
+ *
+ * @param locale - Locale used for fetching and formatting company data
+ * @param dictionary - Localized strings used throughout the tab UI
+ * @returns The complete companies tab element including skeleton, status messages, filters, and a grid of company cards
+ */
 export function CompaniesTab({ locale, dictionary }: CompaniesTabProps) {
   const { companies, isLoading, error } = useCompanies(locale);
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>(companies);

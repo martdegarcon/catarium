@@ -14,6 +14,13 @@ type PoliticiansTabProps = {
   dictionary: Dictionary;
 };
 
+/**
+ * Render a politicians management tab with filters, results information, and a compact list of politician cards.
+ *
+ * @param locale - Locale used for formatting and localized components
+ * @param dictionary - Localized strings for UI labels, messages, and table headers
+ * @returns The politicians tab UI as a React element
+ */
 export function PoliticiansTab({ locale, dictionary }: PoliticiansTabProps) {
   const { politicians, isLoading, error } = usePoliticians();
   const [filteredPoliticians, setFilteredPoliticians] = useState<Politician[]>(politicians);
@@ -94,4 +101,3 @@ export function PoliticiansTab({ locale, dictionary }: PoliticiansTabProps) {
     </div>
   );
 }
-

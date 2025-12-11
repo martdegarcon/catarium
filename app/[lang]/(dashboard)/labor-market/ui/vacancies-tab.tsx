@@ -19,6 +19,17 @@ type VacanciesTabProps = {
 
 const VACANCIES_PER_PAGE = 10;
 
+/**
+ * Renders the Vacancies tab UI with filtering, pagination, and a vacancy detail panel.
+ *
+ * The component fetches vacancies for the given locale, shows a loading skeleton, error or empty states,
+ * and otherwise displays filter controls, a paginated vacancy list, and a sticky detail sidebar for the
+ * selected vacancy. Text and formatting are driven by the provided dictionary and locale.
+ *
+ * @param locale - Locale used for data formatting and localization
+ * @param dictionary - Localization dictionary for UI labels and messages
+ * @returns The Vacancies tab UI element
+ */
 export function VacanciesTab({ locale, dictionary }: VacanciesTabProps) {
   const { vacancies, isLoading, error } = useVacancies(locale);
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);

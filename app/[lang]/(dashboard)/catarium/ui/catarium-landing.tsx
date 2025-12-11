@@ -23,6 +23,19 @@ interface CatariumLandingProps {
   };
 }
 
+/**
+ * Render the Catarium landing page using the provided localized content dictionary.
+ *
+ * Renders a multi-section static landing layout (hero, history, images, geography,
+ * political structure, and leaders) populated from `dict`.
+ *
+ * @param dict - Localized content object with keys:
+ *   `history`, `historyText1`..`historyText6`,
+ *   `geography`, `geographyText`,
+ *   `politicalStructure`, `politicalStructureText1`, `politicalStructureText2`,
+ *   and `leaders` containing `tinaWilson`, `tinaWilsonTitle`, `behmanGarun`, `behmanGarunTitle`.
+ * @returns The React element tree for the Catarium landing page.
+ */
 export default function CatariumLanding({ dict }: CatariumLandingProps) {
   return (
     <div className="w-full bg-[#F5F1E7] text-gray-900">
@@ -156,4 +169,3 @@ export default function CatariumLanding({ dict }: CatariumLandingProps) {
     </div>
   );
 }
-

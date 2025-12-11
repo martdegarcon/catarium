@@ -39,6 +39,16 @@ const formatDate = (dateString: string | null | undefined, locale: Locale): stri
   });
 };
 
+/**
+ * Render a localized, detailed view of a politician including personal data, education, party memberships, ministries, and government roles.
+ *
+ * Renders loading, error, and full detail states; includes back navigation and locale-aware formatting for fields like birthday and children.
+ *
+ * @param locale - Preferred locale to use for formatting and language-specific display (e.g., "ru", "en", "zh"); used when route params do not provide a language.
+ * @param dictionary - Localization dictionary containing labels and messages for the politics pages.
+ * @param politicianId - UUID of the politician to fetch and display.
+ * @returns The JSX element for the politician detail screen.
+ */
 export function PoliticianDetailScreen({ locale, dictionary, politicianId }: PoliticianDetailScreenProps) {
   const router = useRouter();
   const params = useParams();
@@ -318,4 +328,3 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
               </div>
   );
 }
-

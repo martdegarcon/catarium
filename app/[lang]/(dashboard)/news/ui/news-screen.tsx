@@ -19,6 +19,15 @@ type NewsScreenProps = {
 
 const TABS: TabCategory[] = ["all", "politics", "economy", "society", "technology", "culture"];
 
+/**
+ * Render the news listing screen for the given locale and translation dictionary.
+ *
+ * Renders a navbar, page title, category tabs, highlighted news, and an archive list; displays skeleton, error, or empty-state UI when appropriate and supports loading more archived items.
+ *
+ * @param locale - Locale identifier used for fetching and formatting news
+ * @param dictionary - Translations and UI strings for the news screen
+ * @returns The React element for the News screen
+ */
 export function NewsScreen({ locale, dictionary }: NewsScreenProps) {
   const { data: newsResponse, isLoading, error, loadMoreArchive } = useNews(locale);
   const [selectedTab, setSelectedTab] = useState<TabCategory>("all");

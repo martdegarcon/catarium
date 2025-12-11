@@ -1,5 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Renders a skeleton placeholder that mimics the visual layout of a company card for loading states.
+ *
+ * @returns A JSX element containing skeleton blocks arranged like a company card (avatar, title/subtitle, description lines, and action placeholders).
+ */
 export function CompanyCardSkeleton() {
   return (
     <div className="rounded-lg border bg-card p-6 space-y-4">
@@ -23,6 +28,13 @@ export function CompanyCardSkeleton() {
   );
 }
 
+/**
+ * Renders a card-shaped skeleton placeholder for a vacancy item.
+ *
+ * The layout includes a title and subtitle row, three full-width content lines, and a bottom row with two action/placeholders.
+ *
+ * @returns A JSX element representing the vacancy card skeleton
+ */
 export function VacancyCardSkeleton() {
   return (
     <div className="rounded-lg border bg-card p-6 space-y-4">
@@ -43,6 +55,15 @@ export function VacancyCardSkeleton() {
   );
 }
 
+/**
+ * Renders the loading skeleton layout for the Home tab of the labor-market UI.
+ *
+ * The returned markup imitates the final page structure with a responsive bento-style grid,
+ * feature and secondary cards, a statistics block, vacancy placeholders, and repeated
+ * section blocks containing card placeholders.
+ *
+ * @returns A JSX element representing the home tab loading skeleton UI.
+ */
 export function HomeTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -112,6 +133,13 @@ export function HomeTabSkeleton() {
   );
 }
 
+/**
+ * Render a skeleton layout for the Companies tab with filter placeholders and a grid of company cards.
+ *
+ * Renders four filter-shaped skeletons and a responsive grid containing six company card skeletons.
+ *
+ * @returns A JSX element containing the Companies tab skeleton layout with filter placeholders and six company card skeletons.
+ */
 export function CompaniesTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -133,6 +161,11 @@ export function CompaniesTabSkeleton() {
   );
 }
 
+/**
+ * Renders skeleton placeholders for the Vacancies tab, including filter controls and a responsive grid of vacancy cards.
+ *
+ * @returns A JSX element containing a filters row and a responsive grid with six VacancyCardSkeleton placeholders.
+ */
 export function VacanciesTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -153,4 +186,3 @@ export function VacanciesTabSkeleton() {
     </div>
   );
 }
-

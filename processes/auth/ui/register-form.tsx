@@ -33,6 +33,15 @@ import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { useDictionary } from "@/hooks/use-dictionary";
 
+/**
+ * Render a localized user registration form that validates input, creates a user, and provides submission feedback.
+ *
+ * The component validates fields using the configured schema, hashes the password and inserts a new user record,
+ * displays inline validation messages and submission errors or success messages, and navigates to the locale's
+ * login page shortly after a successful registration.
+ *
+ * @returns The registration form UI as a React element
+ */
 export function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
