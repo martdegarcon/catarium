@@ -4,10 +4,10 @@ import { getDictionary } from "../../dictionaries";
 export default async function RegisterPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as any);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center space-y-4 bg-muted/50 px-4 py-12">

@@ -4,11 +4,11 @@ import { PoliticianDetailScreen } from "../../ui/politician-detail-screen";
 export default async function PoliticianDetailPage({
   params,
 }: {
-  params: Promise<{ lang: Locale; id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
-  return <PoliticianDetailScreen locale={lang} dictionary={dictionary} politicianId={id} />;
+  return <PoliticianDetailScreen locale={lang as Locale} dictionary={dictionary} politicianId={id} />;
 }
 

@@ -46,15 +46,17 @@ const navigationItems = [
 
 function BrandMenuItem({ label, href }: { label: string; href: string }) {
   const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
 
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild tooltip={label}>
         <Link href={href}>
-          <div className="flex size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground text-base font-bold">
-            C
-          </div>
-          {state === "expanded" && (
+          {isCollapsed ? (
+            <div className="flex size-8 items-center justify-center rounded-md text-sidebar-primary-foreground text-base font-bold">
+              C
+            </div>
+          ) : (
             <span className="text-base font-semibold">{label}</span>
           )}
         </Link>

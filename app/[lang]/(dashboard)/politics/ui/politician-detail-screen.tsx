@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, User, Calendar, MapPin, Users, GraduationCap, Shield, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PoliticianDetailSkeleton } from "@/components/features/politics/politician-detail-skeleton";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import { usePolitician } from "../model/usePoliticians";
@@ -46,16 +47,12 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
   const { politician, isLoading, error } = usePolitician(politicianId);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-5xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.politics.loading}
-      </div>
-    );
+    return <PoliticianDetailSkeleton />;
   }
 
   if (error || !politician) {
     return (
-      <div className="mx-auto w-full max-w-5xl space-y-4">
+      <div className="w-full space-y-4">
         <Button
           variant="outline"
           onClick={() => router.back()}
@@ -72,7 +69,7 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-6">
+    <div className="w-full space-y-6">
       {/* Кнопка "Назад" */}
       <Link href={`/${lang}/politics?tab=persons`}>
         <Button variant="outline" className="mb-4">
@@ -81,9 +78,9 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
         </Button>
       </Link>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="flex">
         {/* Левая колонка - Основная информация */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="flex flex-col gap-6">
           {/* Заголовок и фото */}
           <div className="flex items-start gap-6">
             <div className="flex-shrink-0">
@@ -113,6 +110,7 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
           </div>
 
           {/* Основная информация */}
+          <div className="flex flex-row gap-6">
           <div className="rounded-2xl border border-border/50 bg-muted/50 backdrop-blur-xl p-6 space-y-4">
             <h2 className="text-2xl font-semibold mb-4">Основная информация</h2>
             
@@ -195,6 +193,7 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
               )}
             </div>
           </div>
+
 
           {/* Образование */}
           {politician.education && politician.education.length > 0 && (
@@ -316,6 +315,7 @@ export function PoliticianDetailScreen({ locale, dictionary, politicianId }: Pol
         </div>
       </div>
     </div>
+              </div>
   );
 }
 

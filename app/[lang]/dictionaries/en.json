@@ -178,11 +178,22 @@
   },
   "pages": {
     "home": {
-      "title": "Home",
-      "description": "Dashboard with four services will live here",
-      "debugTitle": "Debug info",
-      "currentLanguage": "Current language",
-      "dictionaryTitle": "Dictionary heading"
+      "title": "Welcome to Catarium",
+      "subtitle": "Information and Analytics Platform",
+      "description": "Catarium is a comprehensive platform for exploring the island nation of Catarium. Here you will find up-to-date information about the political system, economy, culture, and life of the country.",
+      "sections": {
+        "about": {
+          "title": "About the Project",
+          "text": "The platform provides access to news, labor market information, political system, and the history of Catarium. All data is presented in three languages: Russian, English, and Chinese."
+        },
+        "features": {
+          "title": "Features",
+          "catarium": "History and geography of the country",
+          "news": "Current news by categories",
+          "work": "Labor exchange, companies and vacancies",
+          "politics": "Political structure and persons"
+        }
+      }
     },
     "news": {
       "title": "News",
@@ -252,7 +263,25 @@
     },
     "catarium": {
       "title": "Catarium",
-      "description": "Central overview of the platform"
+      "description": "Central overview of the platform",
+      "history": "History",
+      "historyText1": "Catarium is an island nation located in the southeastern Mediterranean Sea. The country is known for its rich history, dating back to ancient times. Thanks to its favorable geographic location, the island was a center of intersection of trade routes between Europe, Asia, and Africa.",
+      "historyText2": "The first settlements on the territory of modern Catarium date back to the Bronze Age. Throughout the centuries, the island was under the rule of various empires: Phoenician, Greek, Roman, Byzantine, and Ottoman. In 1821, after a long struggle for independence, Catarium became a sovereign state.",
+      "historyText3": "Modern Catarium is a dynamically developing country with a parliamentary republic, combining ancient traditions and innovative technologies. The state actively develops tourism, the financial sector, and renewable energy.",
+      "historyText4": "\"The history of Catarium is the story of a people who never lost hope for freedom and prosperity\"",
+      "historyText5": "The cultural heritage of Catarium is represented by numerous architectural monuments, museums, and ancient temples. The country carefully preserves its traditions by holding annual festivals and cultural events.",
+      "historyText6": "The country's economy is based on tourism, shipping, olive oil production, and wines. Thanks to the mild climate and beautiful nature, Catarium attracts millions of tourists annually.",
+      "geography": "Geography",
+      "geographyText": "Catarium occupies an area of about 28,000 square kilometers and consists of the main island and several smaller islands. The climate is Mediterranean, with hot dry summers and mild wet winters. The terrain is predominantly mountainous, with the highest point being Mount Olympus (1952 m). The coast is dotted with picturesque bays and inlets.",
+      "politicalStructure": "Political Structure",
+      "politicalStructureText1": "Catarium is a parliamentary republic with a unique governance system. The state is headed by two Captains-Regent, elected by parliament for a term of one year.",
+      "politicalStructureText2": "Legislative power belongs to the Great and General Council, consisting of 180 deputies. Executive power is exercised by the Government, headed by the Prime Minister.",
+      "leaders": {
+        "tinaWilson": "Tina Wilson",
+        "tinaWilsonTitle": "Captain-Regent",
+        "behmanGarun": "Behman Garun",
+        "behmanGarunTitle": "Captain-Regent"
+      }
     },
     "laborMarket": {
       "title": "Labor market",

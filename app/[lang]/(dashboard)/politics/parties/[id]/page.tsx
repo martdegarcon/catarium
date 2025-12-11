@@ -4,11 +4,11 @@ import { PartyDetailScreen } from "../../ui/party-detail-screen";
 export default async function PartyDetailPage({
   params,
 }: {
-  params: Promise<{ lang: Locale; id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
-  return <PartyDetailScreen locale={lang} dictionary={dictionary} partyId={id} />;
+  return <PartyDetailScreen locale={lang as Locale} dictionary={dictionary} partyId={id} />;
 }
 

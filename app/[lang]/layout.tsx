@@ -6,13 +6,13 @@ export default async function MainLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
   return (
-    <DictionaryProvider locale={lang} dictionary={dictionary}>
+    <DictionaryProvider locale={lang as Locale} dictionary={dictionary}>
       {children}
     </DictionaryProvider>
   );

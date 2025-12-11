@@ -5,10 +5,10 @@ import { LaborMarketScreen } from "./ui/labor-market-screen";
 export default async function LaborMarketPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
   return (
     <Suspense fallback={<div className="animate-pulse">Загрузка...</div>}>

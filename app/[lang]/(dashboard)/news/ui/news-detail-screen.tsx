@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsNavbar } from "@/components/features/news/navbar";
+import { NewsDetailSkeleton } from "@/components/features/news/news-detail-skeleton";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import type { NewsItem } from "../model/types";
@@ -51,9 +52,7 @@ export function NewsDetailScreen({ locale, dictionary, newsId }: NewsDetailScree
     return (
       <>
         <NewsNavbar locale={locale} />
-        <div className="mx-auto w-full max-w-5xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-          {dictionary.pages.news.loading}
-        </div>
+        <NewsDetailSkeleton />
       </>
     );
   }
@@ -62,7 +61,7 @@ export function NewsDetailScreen({ locale, dictionary, newsId }: NewsDetailScree
     return (
       <>
         <NewsNavbar locale={locale} />
-        <div className="mx-auto w-full max-w-5xl space-y-4">
+        <div className="w-full space-y-4">
           <Button
             variant="outline"
             onClick={() => router.back()}
@@ -82,7 +81,7 @@ export function NewsDetailScreen({ locale, dictionary, newsId }: NewsDetailScree
   return (
     <>
       <NewsNavbar locale={locale} />
-      <div className="mx-auto w-full max-w-5xl space-y-6">
+      <div className="w-full space-y-6">
       {/* Кнопка "Назад" */}
       <Link href={`/${lang}/news`}>
         <Button variant="outline" className="mb-4">

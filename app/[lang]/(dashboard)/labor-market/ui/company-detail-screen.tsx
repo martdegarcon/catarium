@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Building2, Users, Calendar, DollarSign, TrendingUp, MapPin, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CompanyDetailSkeleton } from "@/components/features/labor-market/company-detail-skeleton";
 import type { Locale } from "../../../dictionaries";
 import type { Dictionary } from "@/types/dictionary";
 import type { Company, Vacancy } from "../model/types";
@@ -43,16 +44,12 @@ export function CompanyDetailScreen({ locale, dictionary, companyId }: CompanyDe
   });
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.laborMarket.loading}
-      </div>
-    );
+    return <CompanyDetailSkeleton />;
   }
 
   if (error || !data) {
     return (
-      <div className="mx-auto w-full max-w-7xl space-y-4">
+      <div className="w-full space-y-4">
         <Button
           variant="outline"
           onClick={() => router.back()}
@@ -71,7 +68,7 @@ export function CompanyDetailScreen({ locale, dictionary, companyId }: CompanyDe
   const { company, vacancies } = data;
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-8">
+    <div className="w-full space-y-8">
       {/* Кнопка "Назад" */}
       <Link href={`/${lang}/labor-market?tab=companies`}>
         <Button variant="outline" className="mb-4">

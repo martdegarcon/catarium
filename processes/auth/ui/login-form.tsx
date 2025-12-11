@@ -28,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { useDictionary } from "@/hooks/use-dictionary";
 
@@ -131,6 +132,7 @@ export function LoginForm() {
             )}
 
             <Button type="submit" className="w-full" disabled={loading}>
+              {loading && <Spinner className="mr-2" />}
               {loading
                 ? dictionary.auth.login.actions.submit.loading
                 : dictionary.auth.login.actions.submit.idle}

@@ -1,18 +1,14 @@
-import { getDictionary } from "../../dictionaries";
+import { getDictionary, type Locale } from "../../dictionaries";
+import CatariumLanding from "./ui/catarium-landing";
 
 export default async function CatariumPage({
   params,
 }: {
-  params: Promise<{ lang: "ru" | "en" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary(lang as Locale);
 
-  return (
-    <div className="space-y-4">
-      <h1 className="text-3xl font-bold">{dict.pages.catarium.title}</h1>
-      <p className="text-muted-foreground">{dict.pages.catarium.description}</p>
-    </div>
-  );
+  return <CatariumLanding dict={dict.pages.catarium} />;
 }
 

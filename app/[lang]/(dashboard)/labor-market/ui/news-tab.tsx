@@ -28,7 +28,7 @@ export function NewsTab({ locale, dictionary }: NewsTabProps) {
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.laborMarket.loading}
       </div>
     );
@@ -36,7 +36,7 @@ export function NewsTab({ locale, dictionary }: NewsTabProps) {
 
   if (error) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+      <div className="w-full rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
         {dictionary.pages.laborMarket.error}
       </div>
     );
@@ -44,7 +44,7 @@ export function NewsTab({ locale, dictionary }: NewsTabProps) {
 
   if (news.length === 0) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.laborMarket.emptyState.noNews}
       </div>
     );

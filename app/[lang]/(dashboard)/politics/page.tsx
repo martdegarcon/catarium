@@ -5,10 +5,10 @@ import { PoliticsScreen } from "./ui/politics-screen";
 export default async function PoliticsPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(lang as Locale);
 
   return (
     <Suspense fallback={<div className="animate-pulse">Загрузка...</div>}>

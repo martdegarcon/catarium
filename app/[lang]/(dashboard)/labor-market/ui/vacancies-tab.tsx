@@ -7,6 +7,7 @@ import type { Dictionary } from "@/types/dictionary";
 import type { Vacancy } from "../model/types";
 import { VacancyCard } from "@/components/features/labor-market/vacancy-card";
 import { VacancyFilters } from "@/components/features/labor-market/vacancy-filters";
+import { VacanciesTabSkeleton } from "@/components/features/labor-market/labor-market-skeleton";
 import { formatCurrencyRange } from "@/components/features/labor-market/currency-utils";
 import { translateEmploymentType } from "@/components/features/labor-market/employment-type-utils";
 import { Button } from "@/components/ui/button";
@@ -46,16 +47,12 @@ export function VacanciesTab({ locale, dictionary }: VacanciesTabProps) {
   }, [filteredVacancies.length]);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto w-full max-w-7xl animate-pulse rounded-lg border p-6 text-center text-sm text-muted-foreground">
-        {dictionary.pages.laborMarket.loading}
-      </div>
-    );
+    return <VacanciesTabSkeleton />;
   }
 
   if (error) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
+      <div className="w-full rounded-lg border border-destructive p-6 text-center text-sm text-destructive">
         {dictionary.pages.laborMarket.error}
       </div>
     );
@@ -63,7 +60,7 @@ export function VacanciesTab({ locale, dictionary }: VacanciesTabProps) {
 
   if (vacancies.length === 0) {
     return (
-      <div className="mx-auto w-full max-w-7xl rounded-lg border p-6 text-center text-sm text-muted-foreground">
+      <div className="w-full rounded-lg border p-6 text-center text-sm text-muted-foreground">
         {dictionary.pages.laborMarket.emptyState.noVacancies}
       </div>
     );
