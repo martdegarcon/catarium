@@ -21,6 +21,16 @@ const getLocalImageUrl = (politicianId: string): string => {
   return `/image/${imageNumber}.png`;
 };
 
+/**
+ * Render the party detail screen, showing the party header, status, and its members.
+ *
+ * Displays a loading skeleton while data is being fetched, an error block with a back button when loading fails or the party is missing, and the party details with a members grid when data is available. All textual labels are provided by the `dictionary` prop and navigation uses the provided `locale` as a fallback.
+ *
+ * @param locale - Fallback locale used for constructing localized links when the route parameter is not present
+ * @param dictionary - Localization dictionary containing labels and messages for the politics pages
+ * @param partyId - The identifier of the political party to load and display
+ * @returns A React element that renders the party detail screen UI
+ */
 export function PartyDetailScreen({ locale, dictionary, partyId }: PartyDetailScreenProps) {
   const router = useRouter();
   const params = useParams();
@@ -151,4 +161,3 @@ export function PartyDetailScreen({ locale, dictionary, partyId }: PartyDetailSc
     </div>
   );
 }
-

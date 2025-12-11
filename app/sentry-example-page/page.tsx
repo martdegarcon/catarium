@@ -11,6 +11,14 @@ class SentryExampleFrontendError extends Error {
   }
 }
 
+/**
+ * Renders a client-side page that demonstrates Sentry integration and lets users send a sample frontend error.
+ *
+ * The page checks Sentry SDK connectivity, displays a connectivity status, and provides a "Throw Sample Error" button
+ * that performs a test API call and then raises a sample frontend error to be captured by Sentry.
+ *
+ * @returns A JSX element containing the Sentry example page UI, including status feedback and the sample error trigger.
+ */
 export default function Page() {
   const [hasSentError, setHasSentError] = useState(false);
   const [isConnected, setIsConnected] = useState(true);

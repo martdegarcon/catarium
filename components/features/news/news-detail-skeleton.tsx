@@ -1,5 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Renders a skeleton layout for a news detail page.
+ *
+ * The skeleton mirrors the final page structure: back button, hero image, category and date,
+ * title lines, meta information, and multiple content lines that simulate article text.
+ *
+ * @returns The skeleton layout as a JSX element.
+ */
 export function NewsDetailSkeleton() {
   return (
     <div className="w-full space-y-6">
@@ -40,4 +48,3 @@ export function NewsDetailSkeleton() {
     </div>
   );
 }
-

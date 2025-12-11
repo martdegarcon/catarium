@@ -1,5 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Render a skeleton placeholder for a politician card.
+ *
+ * @returns The politician card skeleton markup used as a loading placeholder.
+ */
 export function PoliticianCardSkeleton() {
   return (
     <div className="rounded-lg border bg-card p-6 space-y-4">
@@ -23,6 +28,11 @@ export function PoliticianCardSkeleton() {
   );
 }
 
+/**
+ * Render a compact table-row skeleton for a politician, with an avatar, name, and five placeholder fields.
+ *
+ * @returns A compact table-row skeleton element containing an avatar circle, a name line, and five field placeholders
+ */
 export function PoliticianCardCompactSkeleton() {
   return (
     <div className="rounded-lg border bg-card">
@@ -49,6 +59,14 @@ export function PoliticianCardCompactSkeleton() {
   );
 }
 
+/**
+ * Render a skeleton placeholder that mimics the visual layout of a party card.
+ *
+ * The skeleton includes a title area, subtitle, three body lines of varying widths,
+ * and two horizontal action placeholders to match the final card structure.
+ *
+ * @returns A JSX element representing the party card skeleton
+ */
 export function PartyCardSkeleton() {
   return (
     <div className="rounded-lg border bg-card p-6 space-y-4">
@@ -69,6 +87,13 @@ export function PartyCardSkeleton() {
   );
 }
 
+/**
+ * Renders the skeleton layout for the Home tab, including statistics, top politicians, and active parties sections.
+ *
+ * The returned element contains a four-card statistics grid, a "Top Politicians" section with three politician card skeletons, and an "Active Parties" section with three party card skeletons to mirror the final UI while data loads.
+ *
+ * @returns The JSX element representing the home tab skeleton UI.
+ */
 export function HomeTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -112,6 +137,13 @@ export function HomeTabSkeleton() {
   );
 }
 
+/**
+ * Skeleton UI for the Politicians tab displayed while politician data is loading.
+ *
+ * Renders placeholder filter controls and a vertical list of compact politician-row skeletons.
+ *
+ * @returns A JSX element containing four filter skeletons and six compact politician card skeletons.
+ */
 export function PoliticiansTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -133,6 +165,11 @@ export function PoliticiansTabSkeleton() {
   );
 }
 
+/**
+ * Render a skeleton layout for the Parties tab during loading.
+ *
+ * @returns A JSX element containing a search input skeleton and a responsive grid of six party card skeletons
+ */
 export function PartiesTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -149,6 +186,11 @@ export function PartiesTabSkeleton() {
   );
 }
 
+/**
+ * Render skeleton placeholders for the Political Structure tab layout.
+ *
+ * @returns The JSX element for the political structure tab loading state, containing three statistic cards and two sections each with four placeholder cards.
+ */
 export function PoliticalStructureTabSkeleton() {
   return (
     <div className="space-y-6">
@@ -179,4 +221,3 @@ export function PoliticalStructureTabSkeleton() {
     </div>
   );
 }
-

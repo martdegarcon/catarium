@@ -30,6 +30,15 @@ const getLocalImageUrl = (politicianId: string): string => {
   return `/image/${imageNumber}.png`;
 };
 
+/**
+ * Render the home/dashboard tab showing political statistics, active parties, and top politicians.
+ *
+ * Renders a skeleton placeholder while underlying data (politicians, parties, statistics) is loading.
+ *
+ * @param locale - Locale code used to build localized routes and links
+ * @param dictionary - Localized text strings used for headings, labels, and link text
+ * @returns The JSX element for the politics Home tab layout
+ */
 export function HomeTab({ locale, dictionary }: HomeTabProps) {
   const { politicians, isLoading: politiciansLoading } = usePoliticians();
   const { parties, isLoading: partiesLoading } = usePoliticalParties();
@@ -240,4 +249,3 @@ export function HomeTab({ locale, dictionary }: HomeTabProps) {
     </div>
   );
 }
-

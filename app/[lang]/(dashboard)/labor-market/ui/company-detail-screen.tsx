@@ -32,6 +32,16 @@ async function fetchCompanyDetail(companyId: string, locale: Locale): Promise<Co
   return res.json();
 }
 
+/**
+ * Renders the company detail screen: a back navigation, company header and metadata cards, and a vacancies list.
+ *
+ * Shows a skeleton while data is loading and a localized error message with a back button if loading fails.
+ *
+ * @param locale - Locale code used for currency and number formatting
+ * @param dictionary - Localization dictionary used for all UI labels and messages
+ * @param companyId - Identifier of the company to load and display
+ * @returns The company detail UI including company info cards and a list of vacancies (or an empty-state message)
+ */
 export function CompanyDetailScreen({ locale, dictionary, companyId }: CompanyDetailScreenProps) {
   const router = useRouter();
   const params = useParams();

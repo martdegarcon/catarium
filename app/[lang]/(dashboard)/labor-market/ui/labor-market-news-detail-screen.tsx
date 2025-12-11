@@ -24,6 +24,14 @@ async function fetchLaborMarketNewsDetail(newsId: string, locale: Locale): Promi
   return res.json();
 }
 
+/**
+ * Render a detailed view for a single labor market news item, including navigation, metadata, image, content, and tags.
+ *
+ * @param locale - Fallback locale used for date formatting and when the route does not provide a language
+ * @param dictionary - Localized strings used for labels, button text, and error messages
+ * @param newsId - Identifier of the news item to fetch and display
+ * @returns A React element that shows the news detail, a loading skeleton while fetching, or an error UI if loading fails
+ */
 export function LaborMarketNewsDetailScreen({ locale, dictionary, newsId }: LaborMarketNewsDetailScreenProps) {
   const router = useRouter();
   const params = useParams();
@@ -150,4 +158,3 @@ export function LaborMarketNewsDetailScreen({ locale, dictionary, newsId }: Labo
     </div>
   );
 }
-

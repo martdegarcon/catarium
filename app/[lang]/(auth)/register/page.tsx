@@ -1,6 +1,12 @@
 import { RegisterForm } from "@/processes/auth/ui/register-form";
 import { getDictionary } from "../../dictionaries";
 
+/**
+ * Renders the localized registration page.
+ *
+ * @param params - A promise that resolves to route parameters with `lang`, the language code used to load localized strings.
+ * @returns The registration page JSX element containing a localized header, description, and the RegisterForm component.
+ */
 export default async function RegisterPage({
   params,
 }: {

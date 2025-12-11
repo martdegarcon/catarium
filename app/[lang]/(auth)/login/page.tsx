@@ -2,6 +2,14 @@
 import { LoginForm } from "@/processes/auth/ui/login-form";
 import { getDictionary } from "../../dictionaries";
 
+/**
+ * Render the localized login page for the specified language.
+ *
+ * Loads the language dictionary for `params.lang` and returns the page UI containing the login form.
+ *
+ * @param params - A promise that resolves to an object with a `lang` string code used to select localization.
+ * @returns A JSX element representing the login page with localized content.
+ */
 export default async function LoginPage({
   params,
 }: {

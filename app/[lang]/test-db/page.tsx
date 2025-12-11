@@ -1,6 +1,16 @@
 import { createClient } from "@/utils/supabase/server";
 import { getDictionary } from "../dictionaries";
 
+/**
+ * Render a localized test page that queries the "users" table and displays the results.
+ *
+ * The component selects a language-specific dictionary using the provided `lang` parameter,
+ * queries Supabase for users, and renders either an error message or the found user count
+ * and a JSON dump of the users.
+ *
+ * @param params - A promise resolving to an object with a `lang` string used to choose localization
+ * @returns The page's rendered JSX showing the user count and JSON data or an error message
+ */
 export default async function TestDBPage({
   params,
 }: {

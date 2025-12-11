@@ -1,5 +1,14 @@
 import { getDictionary } from "../../dictionaries";
 
+/**
+ * Render the vacancies page for the specified language.
+ *
+ * Loads the localization dictionary for the provided `lang` and renders a list of vacancy cards
+ * using entries from `dict.pages.vacancies.items`.
+ *
+ * @param params - A promise that resolves to an object with a `lang` code used to load localization.
+ * @returns A React element representing the localized vacancies page.
+ */
 export default async function VacanciesPage({
   params,
 }: {
